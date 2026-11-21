@@ -1,0 +1,384 @@
+/* ==========================================================================
+   个人空间（说说流）
+   ========================================================================== */
+
+.space {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px clamp(12px, 4vw, 36px) 44px;
+  background: var(--bg);
+}
+
+.space__inner {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.space__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.space__title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.space__subtitle {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.space__loading {
+  margin: 0;
+  padding: 28px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.space__state {
+  padding: 30px 14px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.space__state-title {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.space__state-hint {
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+
+.space__empty {
+  padding: 34px 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+/* ---------------- 发布框 ---------------- */
+
+.feed-composer {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.feed-composer__input {
+  display: block;
+  width: 100%;
+  min-height: 76px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  resize: vertical;
+  line-height: 1.55;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.feed-composer__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.16);
+}
+
+.feed-composer__foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  min-width: 0;
+}
+
+.feed-composer__vis {
+  flex: none;
+  height: 34px;
+  max-width: 120px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+.feed-composer__vis:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.16);
+}
+
+.feed-composer__counter {
+  min-width: 0;
+  font-size: 11.5px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.feed-composer__submit {
+  margin-left: auto;
+  height: 34px;
+  padding: 0 18px;
+}
+
+/* ---------------- 说说卡片 ---------------- */
+
+.feed {
+  min-width: 0;
+  padding: 14px 16px 8px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.feed--pending {
+  opacity: 0.6;
+}
+
+.feed--failed {
+  border-color: var(--feed-failed-bc);
+  background: var(--feed-failed-bg);
+}
+
+.feed__failed {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  color: var(--danger-weak-text);
+}
+
+.feed__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.feed__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.feed__name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.feed__name {
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feed__private {
+  flex: none;
+  padding: 0 5px;
+  border-radius: 5px;
+  background: var(--hover);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+}
+
+.feed__time {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.feed__body {
+  margin: 10px 0 0;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.feed__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 6px 0 4px;
+  border-top: 1px solid var(--line);
+}
+
+.feed__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 12.5px;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.feed__action:hover:not(:disabled) {
+  background: var(--feed-action-hover-not-disabled-action);
+  color: var(--text);
+}
+
+.feed__action--liked {
+  color: var(--feed-liked-text);
+  background: var(--feed-liked-bg);
+  border-color: var(--feed-liked-border);
+}
+
+.feed__action--liked:hover:not(:disabled) {
+  background: var(--feed-liked-strong);
+  color: var(--feed-liked-text);
+}
+
+.feed__action--open {
+  color: var(--primary);
+  background: var(--primary-weak);
+  border-color: var(--info-weak-border);
+}
+
+/* ---------------- 评论区 ---------------- */
+
+.feed__comments {
+  margin: 2px 0 8px;
+  padding: 8px 10px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel-soft);
+  min-width: 0;
+}
+
+.feed-comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 0;
+  min-width: 0;
+}
+
+.feed-comment + .feed-comment {
+  border-top: 1px dashed var(--line);
+}
+
+.feed-comment__main {
+  flex: 1;
+  min-width: 0;
+}
+
+.feed-comment__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.feed-comment__name {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.feed-comment__time {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.feed-comment__body {
+  margin: 2px 0 0;
+  font-size: 13px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.feed-comments__hint {
+  margin: 4px 0 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.feed-comments__form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  min-width: 0;
+}
+
+.feed-comments__input {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.feed-comments__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.13);
+}
+
+.feed-comments__send {
+  flex: none;
+}
+
+
+/* 说说翻页：加载更早一页（服务端 before_id 游标） */
+.space__more {
+  display: block;
+  width: 100%;
+  margin: 4px 0 16px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text-2);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.space__more:hover {
+  background: var(--hover);
+}
+
+.space__more:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

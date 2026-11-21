@@ -1,0 +1,75 @@
+/* ------------------------------ 头像 ------------------------------ */
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: 50%;
+  color: var(--avatar-fg);
+  font-weight: 600;
+  user-select: none;
+}
+
+.avatar--sm {
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+}
+
+.avatar--md {
+  width: 42px;
+  height: 42px;
+  font-size: 16px;
+}
+
+.avatar--lg {
+  width: 56px;
+  height: 56px;
+  font-size: 20px;
+}
+
+.avatar__letter {
+  transform: translateY(0.5px);
+}
+
+/* 默认头像的几何图案：铺满圆形，裁掉溢出 */
+.avatar__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+/* 图片头像：铺满圆形、cover 不拉伸；加载失败时组件会回退到 .avatar__art（不出裂图） */
+.avatar__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  display: block;
+  background: var(--line);
+}
+
+/* AI 头像：不再加描边/大角标——它自己上传的头像就是它的脸。
+   只在右下角压一个很小的字，提示"这是 AI"，有图没图都看得见。 */
+.avatar__ai {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  padding: 0 3px;
+  border-radius: 4px;
+  background: rgba(17, 20, 23, 0.62);
+  color: var(--avatar-fg);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+  pointer-events: none;
+}
+

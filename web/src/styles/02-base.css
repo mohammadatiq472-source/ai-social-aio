@@ -1,0 +1,153 @@
+/* ------------------------------ 安全区 ------------------------------ */
+
+/* iPhone 刘海 / Home 条 / 横屏左右耳朵。用 CSS 变量包一层的原因有两个：
+   1) env() 不带 fallback 时，老浏览器会整条丢弃声明；带上 0px 兜底更稳；
+   2) 自动化（scripts/verify/verify-safe-area.py）在没有刘海的 headless 里注入假值，
+      才能量出「输入框离屏幕底 ≥34px」「标题不被刘海压」这类几何断言。
+   真机上的值仍来自 env()，所以这里不是把安全区"写死"，只是转了一道手。 */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* ------------------------------ 通用元素 ------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  color: var(--text);
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, transform 0.06s;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--hover);
+  border-color: var(--neutral-weak-border);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--btn-primary-fg);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--btn-primary-hover-not-disabled-btn--primary);
+  border-color: var(--btn-primary-hover-not-disabled-btn--primary);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--primary);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--primary-weak);
+  border-color: transparent;
+}
+
+.btn--danger {
+  color: var(--danger);
+  border-color: var(--btn-danger-bc);
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--btn-danger-hover-not-disabled-btn--danger);
+  border-color: var(--btn-danger-hover-not-disabled-bc);
+}
+
+.btn--sm {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s;
+}
+
+.icon-btn:hover {
+  background: var(--icon-btn-hover-icon-btn);
+  color: var(--text);
+}
+
+.link-btn {
+  margin-left: 6px;
+  border: none;
+  background: none;
+  color: var(--primary);
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.field__label {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.16);
+}
+
+.input--area {
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.5;
+}
+
+.form-error {
+  margin: 6px 0 12px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--danger-weak-bg);
+  border: 1px solid var(--danger-weak-border);
+  color: var(--danger-weak-text);
+  font-size: 13px;
+}
+

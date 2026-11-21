@@ -1,0 +1,149 @@
+/* ==========================================================================
+   消息长按动作面板（WeUI actionsheet 风格）+ 已撤回提示
+   ========================================================================== */
+
+.msg-recalled {
+  display: flex;
+  justify-content: center;
+  padding: 2px 16px;
+  margin: 2px 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* 长按期间不要选中文字 / 不要弹系统菜单（只对文字气泡；图片、语音、表情不接管） */
+@media (max-width: 760px) {
+  .msg .bubble {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+}
+
+.ms-actions-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(20, 26, 38, 0.42);
+  animation: ms-actions-fade 0.18s ease;
+}
+
+@keyframes ms-actions-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.ms-actions {
+  width: min(420px, 100%);
+  padding: 0 8px calc(8px + var(--safe-bottom));
+  animation: ms-actions-up 0.28s cubic-bezier(0.22, 0.8, 0.28, 1);
+}
+
+@keyframes ms-actions-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+.ms-actions__group {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ms-actions__title {
+  margin: 0;
+  padding: 14px 16px 10px;
+  font-size: 12px;
+  color: var(--text-2);
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.ms-actions__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.2;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ms-actions__item + .ms-actions__item {
+  border-top: 1px solid var(--line);
+}
+
+.ms-actions__item:hover:not(:disabled),
+.ms-actions__item:active:not(:disabled) {
+  background: var(--hover);
+}
+
+.ms-actions__item:disabled {
+  opacity: 0.45;
+}
+
+.ms-actions__item--danger {
+  color: var(--danger);
+}
+
+.ms-actions__item--primary {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.ms-actions__cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 17px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ms-actions__cancel:hover:not(:disabled) {
+  background: var(--hover);
+}
+
+.ms-actions__cancel:disabled {
+  opacity: 0.45;
+}
+
+.ms-actions__custom {
+  padding-bottom: 8px;
+}
+
+.ms-actions__custom .ms-actions__title {
+  border-bottom: none;
+}
+
+.ms-actions__input {
+  width: calc(100% - 24px);
+  margin: 0 12px 6px;
+  min-height: 44px;
+  font-size: 16px;
+}
+
+.ms-actions__custom .ms-actions__item {
+  border-top: 1px solid var(--line);
+}
+

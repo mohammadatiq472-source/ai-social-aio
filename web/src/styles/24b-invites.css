@@ -1,0 +1,173 @@
+/* ==========================================================================
+   「我的」页：邀请朋友卡片（InviteCard）
+   颜色只用 token：明文邀请码块复用 .token-box（深色覆盖已存在），
+   其余用 --panel-soft / --line / --text-*，不要在这里写字面色值。
+   ========================================================================== */
+
+.invite__quota {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.invite__quota strong {
+  margin: 0 2px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.invite__quota-used {
+  margin-left: 8px;
+  color: var(--muted);
+}
+
+.invite__hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.invite__error {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--danger);
+}
+
+/* 已有有效码：只显示 prefix + 用量 + 到期；不提供「复制旧码」（明文不在库里） */
+.invite__code {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+}
+
+.invite__code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.invite__prefix {
+  flex: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+
+.invite__meta {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* 复用 .token-box 的警示配色（深色已有覆盖），只去掉弹窗用的下边距 */
+.invite__plain {
+  margin-bottom: 0;
+}
+
+.invite__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.invite__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.invite__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.invite__row .field {
+  flex: 1 1 150px;
+  margin-bottom: 0;
+}
+
+.invite__section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.invite__section-title {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.invite__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.invite__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.invite__item + .invite__item {
+  border-top: 1px solid var(--line);
+}
+
+.invite__item-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.invite__item-no {
+  flex: none;
+  font-size: 12px;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.invite__item-date {
+  flex: none;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+@media (max-width: 760px) {
+  /* 手机端两个输入框上下排：并排时「本次邀请人数」只剩 1 位数宽度 */
+  .invite__row {
+    flex-direction: column;
+  }
+
+  /* 关键：列方向下 flex-basis 会变成「高度」，150px 会把每个 .field 撑出大片空白 */
+  .invite__row .field {
+    flex: 0 0 auto;
+  }
+
+  /* 触控热区：邀请卡里的 .btn 默认 36px 高，移动端低于 40px 门槛（verify-touch-targets） */
+  .invite .btn {
+    min-height: 40px;
+  }
+}

@@ -1,0 +1,129 @@
+/* ------------------------------ 响应式 ------------------------------ */
+
+/* 中屏：成员列表变抽屉 */
+@media (max-width: 1080px) {
+  .chat {
+    grid-template-columns: 288px minmax(0, 1fr);
+  }
+
+  .chat__members-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: transparent;
+    border: none;
+    pointer-events: none;
+  }
+
+  .chat__members-backdrop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 26, 38, 0.34);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+  }
+
+  .chat__members-wrap .members {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(340px, 88vw);
+    background: var(--panel);
+    box-shadow: var(--shadow-lg);
+    transform: translateX(102%);
+    transition: transform 0.2s ease;
+  }
+
+  .chat__members-wrap--open {
+    pointer-events: auto;
+  }
+
+  .chat__members-wrap--open .chat__members-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .chat__members-wrap--open .members {
+    transform: translateX(0);
+  }
+
+  .chat__members-btn {
+    display: inline-flex;
+  }
+
+  .members__close {
+    display: inline-flex;
+  }
+}
+
+/* 窄屏：手机形态（底部 Tab、单栏推入、底部抽屉等细节见文件末尾「移动端」层） */
+@media (max-width: 760px) {
+  .auth {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 26px;
+    padding: 32px 18px calc(28px + var(--safe-bottom));
+  }
+
+  .auth__logo {
+    font-size: 34px;
+    letter-spacing: 5px;
+  }
+
+  /* 手机上原来把三条卖点整块隐藏了：陌生人第一屏只剩「logo + 一句话 + 表单」，
+     而「AI 是群成员 / 自己接 / 富内容」正是这个产品和其他群聊的全部差别。
+     现在改成保留，但压缩成紧凑样式，给表单让出高度。 */
+  .auth__bullets {
+    display: grid;
+    gap: 4px;
+    margin-top: 10px;
+    padding-left: 16px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .agents__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .banner__hint {
+    display: none;
+  }
+
+  .modal-mask {
+    padding: 10px;
+    align-items: flex-end;
+  }
+
+  .modal {
+    max-height: calc(100dvh - 20px);
+    border-radius: 16px;
+  }
+}
+
+/* 很矮的窗口：压缩头部 */
+@media (max-height: 560px) {
+  .conv__title {
+    display: none;
+  }
+
+  .composer__hint {
+    display: none;
+  }
+}
+
+/* 尊重系统减弱动效 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .messages {
+    scroll-behavior: auto;
+  }
+}
+

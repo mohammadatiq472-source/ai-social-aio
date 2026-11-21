@@ -1,0 +1,126 @@
+/* ==========================================================================
+   触控热区（2026-11-15 前端审查 P2-4）
+   规则：移动端 / 粗指针下，可点元素的**有效热区** ≥ 40×40。
+   做法：能放大的直接放大（菜单项、小按钮），不能改视觉的用透明 ::after 扩热区；
+        桌面鼠标（pointer:fine）保持原样，避免无谓的布局变化。
+   为什么不是 24：WCAG 2.5.8 的 24px 是底线，手指实际手感 40–44 才不容易点错。
+   ========================================================================== */
+@media (max-width: 760px), (pointer: coarse) {
+  /* 图标按钮：视觉 32/36 不变，热区 40×40 */
+  .icon-btn {
+    position: relative;
+  }
+
+  .icon-btn::after {
+    content: '';
+    position: absolute;
+    /* 32/36 的图标按钮扩到 44：实测被相邻按钮吃掉 4–6px 后，有效热区才稳定 ≥40 */
+    inset: -6px;
+  }
+
+  /* 消息头像 34×38 → 扩到 48×52（左右各 7） */
+  .msg__avatar-btn {
+    position: relative;
+  }
+
+  .msg__avatar-btn::after {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+  }
+
+  /* 输入栏工具栏 32 → 热区 44 */
+  .composer__tool {
+    position: relative;
+  }
+
+  .composer__tool::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+  }
+
+  /* 开关 48×28 → 有效热区 ≥40 高（扩 8px 上下；被行内文字吃掉一点后仍有 40+） */
+  .switch {
+    position: relative;
+  }
+
+  .switch::after {
+    content: '';
+    position: absolute;
+    inset: -8px 0;
+  }
+
+  /* 「复制账号号」只有 24×17：四周大幅扩热区（邻近是纯文本，不会抢点击） */
+  .me-account__copy {
+    position: relative;
+  }
+
+  .me-account__copy::after {
+    content: '';
+    position: absolute;
+    inset: -12px -10px;
+  }
+
+  /* 菜单项 / 小按钮：直接抬到 40 高（点得准比紧凑重要） */
+  .conv__menu-item {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* 相邻图标按钮原来只隔 2–4px：透明热区互相吃，实测只有 36–38px。
+     移动端把间距拉开到 8px，让每个按钮都拿到完整 40+ 的热区。 */
+  .conv__actions,
+  .chat__head-actions {
+    gap: 8px;
+  }
+
+  /* 开关组上下留 12px：开关自身 28 高，热区要向上/下各扩 8px 才够 40 */
+  .agent-row__switches {
+    gap: 12px;
+  }
+
+  .btn--sm {
+    min-height: 40px;
+  }
+
+  .me-meta {
+    min-height: 40px;
+  }
+
+  /* 搜索框：原来 input 自身盒子只有 21–36px 高，撑到 40 才算合格热区 */
+  .conv__search-input {
+    min-height: 40px;
+    padding: 8px 0;
+  }
+
+  /* 通用输入框：基础规则是 min-height: 38px（02-base.css:110）。38 这条线在 Windows 上
+     会被字体行盒撑到 40+，但 Linux/Android 的回退字体行盒更紧，盒子正好停在 38——
+     CI（ubuntu）实测「好友页 8 位账号输入框」38×280，有效热区 38 高，不达标（2026-11-15）。
+     处置不是放宽阈值（40 是项目自己定的线，38 在真机上确实点不准），而是把控件补到 40：
+     min-height 直接决定盒子下界，与字体度量无关，两个平台都会稳定 ≥40。
+     只作用于移动端/粗指针（本文件整段在 760px 或 coarse 的媒体查询里），桌面布局不变。 */
+  .input {
+    min-height: 40px;
+  }
+
+  /* 搜索清除键视觉只有 22×22：四周各扩 9px 到 40×40。
+     右侧是输入框的 padding，透明热区压在上面不会抢走输入焦点。 */
+  .conv__search-clear {
+    position: relative;
+  }
+
+  .conv__search-clear::after {
+    content: '';
+    position: absolute;
+    inset: -9px;
+  }
+
+  /* 「回复」在触屏上永远 opacity:0（没有 hover），留着就是一个看不见却可点的区域；
+     触屏改用长按菜单里的「引用」。 */
+  .msg__reply {
+    display: none;
+  }
+}

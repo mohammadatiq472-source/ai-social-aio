@@ -1,0 +1,215 @@
+/* ==========================================================================
+   深色模式：只换色，不动布局（浅色仍是主形态）
+   ========================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111111;
+    --card: #1c1c1e;
+    --panel-soft: #232326;
+    --line: #2c2c2e;
+    --line-strong: #3a3a3e;
+    --text: #f2f2f7;
+    --text-2: #9a9aa1;
+    /* 深色下三级文字原来 #6b6b70 压 #111 只有 3.56:1（时间戳/搜索占位），提到 8.0:1 */
+    --text-3: #a8a8b0;
+    --bubble-other: #262629;
+    --hover: #262629;
+    --primary-weak: #0f2b3a;
+    --ai-weak: #23272b;
+    /* --ai 是「AI N」徽标的前景色，必须在深色里一起换：只换底色会让 10px 小字掉到 1.97:1 */
+    --ai: #9fb0bb;
+    /* 深色下的自己气泡：微信深色用的是暗一档的绿 + 浅色字（浅绿配深色页面太刺眼） */
+    --bubble-self: #2f6b46;
+    --bubble-self-fg: #f2f2f7;
+    --msg-mine-voice-fg: #f2f2f7;
+    --msg-mine-voice-icon: rgba(242, 242, 247, 0.85);
+    --msg-mine-voice-bar: rgba(242, 242, 247, 0.4);
+    --ai-bubble: #262a2d;
+    --warn-bg: #2a2110;
+    --warn-line: #4a3a17;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.65);
+    /* 语义色在深色下的值：组件只写 var()，不再逐组件打补丁 */
+
+    --dk-quote-bg: #23272b;
+    --dk-quote-mine-bc: #1e4a63;
+    --dk-token-box-bc: #4a3a17;
+    --dk-token-box-bg: #241f10;
+    --dk-conv-ai-bc: #3a4147;
+    --dk-feed-failed-bg: #241314;
+    --dk-quote-text-fg: #9aa1a7;
+    --dk-role-pill-owner-bg: #3a2a0c;
+    --dk-snippet-code-bg: #0d0d0f;
+    --dk-role-pill-admin-fg: #7fb7e0;
+    --dk-form-error-bg: #3a1618;
+    --dk-role-pill-owner-fg: #e0b866;
+    --dk-quote-mine-fg: #a9d3ea;
+    --dk-form-error-bc: #5c2326;
+    --dk-snippet-code-fg: #d8dee9;
+    --dk-quote-fg: #b6bcc2;
+    --dk-token-box-warn-fg: #d8b464;
+    --dk-toast-bg: #2c2c2e;
+    --dk-banner-hint-fg: #b79456;
+    --dk-quote-mine-quote-text-fg: #9fc7dd;
+    --dk-status-pill-active-bg: #14301f;
+    --dk-form-error-fg: #ff8a80;
+    --dk-quote-mine-bg: #102a3a;
+    --dk-status-pill-active-bc: #245c3a;
+    /* 语义色在深色下的值：组件只写 var()，不再逐组件打补丁 */
+    /* 语义色在深色下的值：组件只写 var()，不再逐组件打补丁 */
+    /* 语义色在深色下的值：组件只写 var()，不再逐组件打补丁 */
+    /* 语义色在深色下的值：组件只写 var()，不再逐组件打补丁 */
+    --ok-weak-bg: #14301f;
+    --ok-weak-border: #245c3a;
+    --ok-text: var(--code-chip-text);
+    --neutral-weak-bg: #23272b;
+    --neutral-weak-border: #3a4147;
+    --neutral-weak-text: #b6bcc2;
+    --danger-weak-bg: #3a1618;
+    --danger-weak-border: #5c2326;
+    --danger-weak-text: #ff8a80;
+    --warn-weak-bg: #2a2110;
+    --warn-weak-border: #4a3a17;
+    --warn-weak-text: #d8b464;
+    --info-weak-bg: #102a3a;
+    --info-weak-border: #1e4a63;
+    --info-weak-text: #7fb7e0;
+    --quote-bg: #23272b;
+    --quote-border: #3a4147;
+    --quote-text: #9aa1a7;
+    --quote-mine-bg: #102a3a;
+    --quote-mine-border: #1e4a63;
+    --quote-mine-text: #9fc7dd;
+    --code-chip-bg: #0d0d0f;
+    --code-chip-text: #d8dee9;
+    --snippet-bg: #0d0d0f;
+    --snippet-text: #d8dee9;
+    --feed-liked-bg: #3a1618;
+    --feed-liked-strong: #3a1618;
+    --feed-liked-border: #5c2326;
+    --feed-liked-text: #ff8a80;
+    /* 同上：ai-purple-* 的名字是历史遗留，深色值只是配套覆盖，不改变语义（值不改） */
+    --ai-purple-weak: #2a2233;
+    --ai-purple-text: #cbbcf0;
+    /* 覆盖 01-tokens.css 的 `light dark`：深色下必须明确 dark，否则 UA 会按系统偏好
+       之外的启发式渲染原生控件（iOS Safari 会保持浅色清除键/日期控件）。 */
+    color-scheme: dark;
+  }
+
+  .bubble {
+    border-color: var(--line-strong);
+    box-shadow: none;
+  }
+
+  .modal-mask,
+  .chat__members-backdrop {
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .conv__ai {
+    border-color: var(--dk-conv-ai-bc);
+  }
+
+  .quote {
+    background: var(--dk-quote-bg);
+    border-color: var(--dk-conv-ai-bc);
+    color: var(--dk-quote-fg);
+  }
+
+  .quote__text {
+    color: var(--dk-quote-text-fg);
+  }
+
+  .quote--mine {
+    background: var(--dk-quote-mine-bg);
+    border-color: var(--dk-quote-mine-bc);
+    color: var(--dk-quote-mine-fg);
+  }
+
+  .quote--mine .quote__text {
+    color: var(--dk-quote-mine-quote-text-fg);
+  }
+
+  .token-box {
+    background: var(--dk-token-box-bg);
+    border-color: var(--dk-token-box-bc);
+  }
+
+  .token-box__warn {
+    color: var(--dk-token-box-warn-fg);
+  }
+
+  .snippet__code {
+    background: var(--dk-snippet-code-bg);
+    color: var(--dk-snippet-code-fg);
+  }
+
+  .mode-pill--free,
+  .status-pill--active {
+    background: var(--dk-status-pill-active-bg);
+    border-color: var(--dk-status-pill-active-bc);
+  }
+
+  .role-pill--owner {
+    background: var(--dk-role-pill-owner-bg);
+    color: var(--dk-role-pill-owner-fg);
+  }
+
+  .role-pill--admin {
+    background: var(--dk-quote-mine-bg);
+    color: var(--dk-role-pill-admin-fg);
+  }
+
+  .member-mode-select {
+    background: var(--card);
+    color: var(--text);
+  }
+
+  .tabs,
+  .topnav__tabs {
+    background: var(--hover);
+  }
+
+  .tab--active {
+    background: var(--card);
+    color: var(--primary);
+  }
+
+  .form-error {
+    background: var(--dk-form-error-bg);
+    border-color: var(--dk-form-error-bc);
+    color: var(--dk-form-error-fg);
+  }
+
+  .feed--failed {
+    border-color: var(--dk-form-error-bc);
+    background: var(--dk-feed-failed-bg);
+  }
+
+  .feed__failed,
+  .msg__retry {
+    color: var(--dk-form-error-fg);
+  }
+
+  .feed__action--liked {
+    background: var(--dk-form-error-bg);
+    border-color: var(--dk-form-error-bc);
+    color: var(--dk-form-error-fg);
+  }
+
+  .feed__action--open {
+    background: var(--dk-quote-mine-bg);
+    border-color: var(--dk-quote-mine-bc);
+  }
+
+  .banner__hint {
+    color: var(--dk-banner-hint-fg);
+  }
+
+  .toast {
+    background: var(--dk-toast-bg);
+  }
+}
+

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "AIO group chat (MCP)",
+    "description": "Connects DeepSeek Harness to an AIO group chat over MCP, where humans and their own AI members talk in shared groups. Defaults to a self-hosted AIO instance; set AIO_MCP_URL and AIO_MCP_TOKEN to use another self-hosted or official instance."
+  }
+}

@@ -1,0 +1,173 @@
+/* ==========================================================================
+   桌面左侧 rail（2026-11-19）
+   --------------------------------------------------------------------------
+   为什么桌面改用竖栏：聊天是**竖向**滚动，高度比宽度值钱。
+   顶部 52px 横条会从每一屏吃掉 52px 消息，且和列表里的「头像+状态」块重复。
+
+   为什么这是「两套前端」而不是一套响应式：
+   - 桌面（≥1024px）：rail + 三栏，导航是竖直的图标栏；
+   - 平板（761–1023px）：仍用顶部 tab（宽度不够放下三栏，但高度还够）；
+   - 手机（≤760px）：底部 .tabbar（拇指可达），完全不动。
+   三档是**三种不同的信息架构**，不是同一套布局缩放，所以用 CSS 断点而不是 JS 判断。
+
+   注意：本文件必须加载在 33-touch-targets.css 之前（触控热区要最后覆盖）。
+   ========================================================================== */
+
+.rail {
+  display: none;
+}
+
+/* 导航形态按「输入方式」而不是纯宽度决定：
+   - 鼠标（pointer: fine）且宽度够 → 左侧 rail。这才是台式机的形态；
+   - 触摸（pointer: coarse）→ 底部 tab（不管多宽：iPad mini 横屏 1024px 仍该用拇指够得着的底栏）；
+   - 鼠标 + 窄窗口（< 900px）→ 回落到顶部 tab。
+   为什么不用纯 min-width：一台 iPad Pro（1024–1366）会被 min-width 误判成桌面，
+   结果顶部出现 52px 横条、导航跑到够不着的地方——这正是「平板既不是手机也不是电脑」的由来。 */
+@media (pointer: fine) and (min-width: 900px) {
+  /* 桌面：导航从顶部横条换成左侧竖栏 */
+  .topnav {
+    display: none;
+  }
+
+  .shell {
+    flex-direction: row;
+  }
+
+  /* 横排时主体必须自己吃掉剩余宽度，否则 rail 会被内容顶飞 */
+  .shell > .shell__body {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 64px;
+    flex: none;
+    padding: 10px 0 12px;
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+  }
+
+  .rail__brand {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+    margin-bottom: 8px;
+    user-select: none;
+  }
+
+  .rail__btn {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text-2);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .rail__btn:hover {
+    background: var(--hover);
+    color: var(--text);
+  }
+
+  .rail__btn--active {
+    background: var(--primary-weak);
+    color: var(--primary);
+  }
+
+  .rail__btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* 图标沿用 tabbar__icon 的线性 SVG，这里只放大一点适配竖栏 */
+  .rail__btn .tabbar__icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .rail__spacer {
+    flex: 1 1 auto;
+  }
+
+  .rail__avatar {
+    margin-top: 4px;
+  }
+
+  .rail__me {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .rail__me:hover {
+    background: var(--hover);
+  }
+
+  /* ---- 成员面板：桌面默认收起，点过就记住（不再白占 288px） ---- */
+  .chat {
+    grid-template-columns: 300px minmax(0, 1fr);
+  }
+
+  .chat--members-open {
+    grid-template-columns: 300px minmax(0, 1fr) 288px;
+  }
+
+  .chat__members-wrap {
+    display: none;
+    position: static;
+    pointer-events: auto;
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+  }
+
+  .chat__members-wrap--open {
+    display: block;
+  }
+
+  .chat__members-backdrop {
+    display: none;
+  }
+
+  /* 桌面也要有成员开关（手机上它是浮层入口，桌面上是列的显隐） */
+  .chat__members-btn {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+  }
+
+  .members__close {
+    display: inline-flex;
+  }
+
+  /* 未读红点：与列表里的 .conv__count 同一套颜色，位置在图标右上角 */
+  .rail__badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    background: var(--badge-dot-bg);
+    color: var(--badge-dot-fg);
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+    font-weight: 600;
+  }
+}

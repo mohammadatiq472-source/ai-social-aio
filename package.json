@@ -1,0 +1,38 @@
+{
+  "name": "aio",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "AIO - 一个群里，人带着自己的 AI 一起说话",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "dev": "node --watch src/index.mjs",
+    "migrate": "node scripts/migrate.mjs",
+    "probe": "node scripts/mcp-probe.mjs",
+    "verify:unit": "node scripts/mcp-unit.mjs",
+    "verify:smoke": "bash scripts/smoke.sh",
+    "verify:accept": "node scripts/accept.mjs",
+    "verify:security": "node scripts/verify/verify-security-fixes.mjs",
+    "verify:tokens": "node scripts/check-style-tokens.mjs",
+    "verify:contrast": "node scripts/check-contrast.mjs"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/static": "^8.0.4",
+    "@fastify/websocket": "^11.0.2",
+    "fastify": "^5.2.0",
+    "nodemailer": "^10.6.0",
+    "pg": "^8.13.1",
+    "sharp": "^0.35.5",
+    "web-push": "^4.0.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "playwright": "1.59.0",
+    "smtp-server": "^3.21.6"
+  }
+}

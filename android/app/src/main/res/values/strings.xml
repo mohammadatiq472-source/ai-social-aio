@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AIO</string>
+    <string name="error_title">连接失败</string>
+    <string name="error_detail">请检查网络后重试。</string>
+    <string name="error_retry">重试</string>
+    <string name="error_ssl">证书校验失败，已阻止连接</string>
+
+    <!-- 原生推送 -->
+    <string name="push_service_channel">消息接收</string>
+    <string name="push_service_channel_desc">保持一条 WebSocket 连接，App 在后台也能收到新消息</string>
+    <string name="push_service_title">AIO 正在接收消息</string>
+    <string name="push_service_text">点按打开 AIO</string>
+    <string name="push_messages_channel">新消息</string>
+    <string name="push_messages_channel_desc">群聊与私聊的新消息提醒</string>
+    <string name="push_fallback_sender">AIO</string>
+    <string name="push_fallback_body">[非文本消息]</string>
+</resources>

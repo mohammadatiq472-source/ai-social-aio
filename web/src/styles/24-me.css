@@ -1,0 +1,327 @@
+/* ==========================================================================
+   「我的」页 + 号码相关小组件
+   ========================================================================== */
+
+.field__hint {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.pick-row__ai {
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* 新建 AI 成功后的接入信息 */
+.token-box__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+
+.token-box__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.token-box__row dt {
+  flex: none;
+  width: 64px;
+  color: var(--token-box-row-dt-fg);
+}
+
+.token-box__row dd {
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.token-box__row code {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--card);
+  border: 1px solid var(--warn-weak-border);
+  word-break: break-all;
+}
+
+.token-box__once {
+  font-size: 11px;
+  color: var(--token-box-once-fg);
+}
+
+.token-box__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.shell__body > .me {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.me {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px clamp(12px, 4vw, 36px) 32px;
+  background: var(--bg);
+  -webkit-overflow-scrolling: touch;
+}
+
+.me__inner {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.me__head {
+  padding: 4px 2px 2px;
+}
+
+.me__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.me__subtitle {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: var(--text-2);
+}
+
+.me-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.me-profile {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.me-profile__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.me-profile__name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.me-profile__email {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-2);
+  word-break: break-all;
+}
+
+.me-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.me-account__label {
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.me-account__no {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.me-account__no--empty {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--text-3);
+}
+
+.me-account__copy {
+  flex: none;
+}
+
+.me-account__hint {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.me-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.me-row + .me-row {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.me-row__text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.me-row__title {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.me-row__hint {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.switch {
+  position: relative;
+  flex: none;
+  width: 48px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--line-strong);
+  transition: background 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.switch__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--switch-knob-bg);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.18s ease;
+}
+
+.switch--on {
+  background: var(--primary);
+}
+
+.switch--on .switch__knob {
+  transform: translateX(20px);
+}
+
+.switch:disabled {
+  opacity: 0.6;
+}
+
+.me-card__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.me-info {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.me-info__row {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.me-info__row dt {
+  flex: none;
+  width: 76px;
+  color: var(--text-2);
+}
+
+.me-info__row dd {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  word-break: break-all;
+}
+
+.me-info__mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+}
+
+.me-card__hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* 「我的 → 头像」：预览 + 按钮 + 提示；flex-wrap 保证手机上不横向溢出 */
+.me-avatar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.me-avatar__preview {
+  flex: none;
+}
+
+.me-avatar__main {
+  flex: 1 1 200px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.me-avatar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.me-avatar__hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+/* 真正的 file input 藏起来，由「更换头像」按钮触发 */
+.me-avatar__file {
+  display: none;
+}
+

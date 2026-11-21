@@ -1,0 +1,32 @@
+# CODEOWNERS —— 改到谁的目录，自动请求谁 review。
+# 语法：<路径模式> <@用户...>；后面的规则覆盖前面的。
+# 注意：CODEOWNERS 只负责"请求 review"，真正拦住合并要在仓库设置里打开
+#       Branch protection → Require review from Code Owners。
+
+# 兜底：任何改动都让维护者看一眼
+* @mohammadatiq472-source
+
+# ── A · 城市与数据（第一位协作者）──────────────────────────────
+/world/src/city/            @Felixdadsas @mohammadatiq472-source
+/world/assets/city/         @Felixdadsas @mohammadatiq472-source
+/world/tools/build-city/    @Felixdadsas @mohammadatiq472-source
+/scripts/verify/verify-futian-city.py    @Felixdadsas @mohammadatiq472-source
+/scripts/verify/verify-futian-street.py  @Felixdadsas @mohammadatiq472-source
+
+# ── B · 内核与性能（第二位移交后把 handle 加到这里）──────────────
+# /world/src/physics/       @<第二位> @mohammadatiq472-source
+# /world/src/core/          @<第二位> @mohammadatiq472-source
+# /world/src/render/        @<第二位> @mohammadatiq472-source
+# /world/src/assets/        @<第二位> @mohammadatiq472-source
+# /world/tools/             @<第二位> @mohammadatiq472-source
+
+# ── 公共脊柱：只有维护者能改 ───────────────────────────────────
+/world/src/main.ts          @mohammadatiq472-source
+/world/src/render/scene.ts  @mohammadatiq472-source
+/world/index.html           @mohammadatiq472-source
+/world/vite.config.ts       @mohammadatiq472-source
+/world/package.json         @mohammadatiq472-source
+/world/package-lock.json    @mohammadatiq472-source
+/world/README.md            @mohammadatiq472-source
+/.github/                   @mohammadatiq472-source
+/CONTRIBUTING.md            @mohammadatiq472-source

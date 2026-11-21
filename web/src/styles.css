@@ -1,0 +1,46 @@
+/* AIO 样式入口：按"顶层注释块"拆到 ./styles/，顺序与拆分前完全一致。
+   改样式先找对应文件（见 docs/架构与约束.md 的样式表）；不要在这里写规则。 */
+
+@import './styles/01-tokens.css';
+@import './styles/02-base.css';
+@import './styles/03-avatar.css';
+@import './styles/04-boot.css';
+@import './styles/05-auth.css';
+@import './styles/06-shell.css';
+@import './styles/07-message-area.css';
+@import './styles/08-message-list.css';
+@import './styles/09-composer.css';
+@import './styles/10-members.css';
+@import './styles/11-modal.css';
+@import './styles/12-agents.css';
+@import './styles/13-toast.css';
+@import './styles/14-responsive.css';
+@import './styles/15-topnav.css';
+@import './styles/16-space.css';
+@import './styles/17-mobile.css';
+@import './styles/18-dark.css';
+@import './styles/19-rich.css';
+@import './styles/19a-rich-file-html.css';
+@import './styles/19b-lightbox.css';
+@import './styles/19c-composer-tools.css';
+@import './styles/19d-sticker-panel.css';
+@import './styles/19e-rich-mobile.css';
+@import './styles/19f-rich-dark.css';
+@import './styles/20-voice.css';
+@import './styles/21-plus-panel.css';
+@import './styles/22-members-lazy.css';
+@import './styles/23-action-sheet.css';
+@import './styles/24-me.css';
+@import './styles/24a-me-cards.css';
+@import './styles/24b-invites.css';
+@import './styles/25-misc.css';
+@import './styles/26-scrollbars.css';
+@import './styles/28-groups.css';
+@import './styles/26-search.css';
+@import './styles/27-admin.css';
+@import './styles/27a-admin-invites.css';
+@import './styles/28-safety.css';
+@import './styles/29-announcement.css';
+@import './styles/30-rail.css';
+/* 触控热区必须最后加载：它按「移动端/粗指针」覆盖前面各文件的尺寸 */
+@import './styles/33-touch-targets.css';

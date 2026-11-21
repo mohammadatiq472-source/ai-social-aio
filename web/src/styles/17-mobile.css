@@ -1,0 +1,699 @@
+/* ==========================================================================
+   移动端层：手机是主形态，桌面只是「放大版」
+   底部 Tab / 会话列表→聊天横向推入 / 底部输入栏 / 成员底部抽屉
+   ========================================================================== */
+
+/* ---------- 只在手机出现的部件：桌面一律隐藏 ---------- */
+
+.tabbar,
+.members__grabber,
+.composer__send-icon {
+  display: none;
+}
+
+/* 断点是「形态」不是「宽度」：
+   - ≤760px：竖屏手机 / 窄窗口；
+   - (pointer: coarse) 且 ≤1080px：所有触屏设备（iPhone 横屏 844、iPad 竖屏 820、iPad 横屏 1024）。
+     原来只写了「coarse + 矮视口」，于是 iPad 会掉回桌面三栏：顶部 52px 横条 +
+     右栏常驻，拇指够不着导航，键盘还会盖住输入栏——这就是「平板既不是手机也不是电脑」。
+     用 pointer 而不是纯宽度：触屏笔记本的主指针是鼠标（fine），不会被误判成手机；
+     iPad 触屏（coarse）则统一走底部栏。>1080 的触屏（iPad Pro 横屏）仍给桌面三栏，
+     因为那个尺寸上鼠标式布局不吃亏。 */
+@media (max-width: 760px), (pointer: coarse) and (max-width: 1080px) {
+  /* ---------- 外壳：手机隐藏顶部胶囊导航，改用底部 Tab ---------- */
+
+  .shell {
+    height: 100dvh;
+    /* 键盘弹起时由 App 写入可视视口高度，输入栏始终贴在键盘上方 */
+    height: var(--app-height, 100dvh);
+    /* 顶部刘海 + 横屏左右「耳朵」：整个外壳内缩，标题/内容都不会被切口压住 */
+    padding-top: var(--safe-top);
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+    background: var(--bg);
+  }
+
+  .topnav {
+    display: none;
+  }
+
+  .shell__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .shell__body > .chat,
+  .shell__body > .agents {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* ---------- 底部 Tab 栏：44px 触控高度 + 安全区 ---------- */
+
+  .tabbar {
+    flex: none;
+    display: flex;
+    align-items: stretch;
+    background: var(--card);
+    border-top: 1px solid var(--line);
+    padding-bottom: var(--safe-bottom);
+    z-index: 40;
+  }
+
+  .tabbar.tabbar--hidden {
+    display: none;
+  }
+
+  .tabbar__btn {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 44px;
+    height: 54px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 5px 0 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-2);
+    font-size: 12px;
+    line-height: 1.2;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s;
+  }
+
+  .tabbar__btn:active {
+    background: var(--hover);
+  }
+
+  .tabbar__icon {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  .tabbar__btn--active {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* ---------- 会话列表 ↔ 聊天：横向推入（220ms） ---------- */
+
+  .chat {
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .chat > .conv,
+  .chat > .chat__main {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    will-change: transform;
+    transition: transform 220ms cubic-bezier(0.22, 0.8, 0.28, 1);
+  }
+
+  .chat > .conv {
+    transform: translateX(0);
+    background: var(--card);
+    border-right: none;
+  }
+
+  .chat > .chat__main {
+    transform: translateX(100%);
+    background: var(--bg);
+  }
+
+  /* 进入会话：列表左移一点露出「层叠」，聊天页从右侧推上来 */
+  .chat--chat > .conv {
+    transform: translateX(-26%);
+  }
+
+  .chat--chat > .chat__main {
+    transform: translateX(0);
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ---------- 会话列表 ---------- */
+
+  .conv__head {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .conv__me-name {
+    max-width: 46vw;
+    font-size: 16px;
+  }
+
+  .conv__actions .icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .conv__title {
+    padding: 10px 14px 4px;
+  }
+
+  .conv__list {
+    padding: 0 8px 12px;
+  }
+
+  .conv__item {
+    padding: 11px 10px;
+    gap: 10px;
+    border-radius: 12px;
+    min-height: 64px;
+  }
+
+  .conv__name {
+    font-size: 16px;
+  }
+
+  .conv__preview {
+    font-size: 13px;
+  }
+
+  .conv__time {
+    font-size: 12px;
+  }
+
+  .conv__count {
+    font-size: 11px;
+  }
+
+  /* ---------- 聊天页头部：返回箭头 ---------- */
+
+  .chat__head {
+    flex: none;
+    min-height: 48px;
+    padding: 5px 10px;
+    gap: 4px;
+  }
+
+  .chat__back {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    margin-left: -6px;
+    font-size: 22px;
+    color: var(--text);
+    border-radius: 50%;
+  }
+
+  .chat__back:active {
+    background: var(--hover);
+  }
+
+  .chat__title {
+    font-size: 17px;
+  }
+
+  .chat__head-actions .btn--ghost {
+    display: none;
+  }
+
+  .chat__members-btn {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .banner {
+    padding: 6px 12px;
+    font-size: 12.5px;
+  }
+
+  /* ---------- 消息：宽度 ≤78%、16px 正文 ---------- */
+
+  .messages {
+    padding: 10px 12px 6px;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .messages__inner {
+    gap: 12px;
+  }
+
+  .msg {
+    gap: 8px;
+  }
+
+  .msg__col {
+    max-width: 78%;
+  }
+
+  .bubble {
+    padding: 9px 13px;
+  }
+
+  .bubble__body {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .msg__head {
+    gap: 5px;
+  }
+
+  .msg__owner {
+    /* AI 必须显示「由谁创建」：手机上保留，但压缩宽度避免顶破气泡列 */
+    max-width: 42vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 11px;
+  }
+
+  .msg__reply,
+  .msg__retry {
+    min-height: 24px;
+    padding: 2px 0;
+  }
+
+  .day-sep {
+    margin: 8px 0;
+  }
+
+  /* ---------- 输入栏：贴底 + 安全区 + 16px 防缩放 ---------- */
+
+  .composer {
+    flex: none;
+    padding: 8px 10px calc(8px + var(--safe-bottom));
+  }
+
+  .composer__box {
+    align-items: flex-end;
+    gap: 6px;
+    padding: 3px 3px 3px 14px;
+    border-radius: 22px;
+  }
+
+  .composer__input {
+    font-size: 16px;
+    line-height: 1.4;
+    padding: 10px 2px;
+    max-height: 112px;
+  }
+
+  .composer__side {
+    gap: 4px;
+    padding-bottom: 0;
+  }
+
+  .composer__counter {
+    font-size: 11px;
+  }
+
+  .composer__send {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    padding: 0;
+    border-radius: 50%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .composer__send-icon {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+  }
+
+  .composer__send-text {
+    display: none;
+  }
+
+  .composer__hint {
+    display: none;
+  }
+
+  .composer__reply {
+    margin-bottom: 6px;
+    padding: 6px 8px;
+  }
+
+  /* ---------- @ 补全：手机上铺满宽度 ---------- */
+
+  .mention-pop {
+    left: 10px;
+    right: 10px;
+    width: auto;
+    bottom: calc(100% - 2px);
+    max-height: 42vh;
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .mention-item {
+    min-height: 44px;
+    padding: 8px 10px;
+  }
+
+  .mention-item__name {
+    font-size: 15px;
+  }
+
+  /* ---------- 成员面板：右侧抽屉 → 底部抽屉 ---------- */
+
+  .chat__members-wrap .members {
+    position: absolute;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    max-height: 80vh;
+    border-radius: 16px 16px 0 0;
+    background: var(--card);
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.16);
+    transform: translateY(100%);
+    transition: transform 240ms cubic-bezier(0.22, 0.8, 0.28, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: var(--safe-bottom);
+  }
+
+  .chat__members-wrap--open .members {
+    transform: translateY(0);
+  }
+
+  .members__grabber {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    padding-top: 8px;
+    touch-action: none;
+  }
+
+  .members__grabber::before {
+    content: '';
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--line-strong);
+  }
+
+  .members__head {
+    flex: none;
+    padding: 4px 16px 8px;
+    border-bottom: none;
+    touch-action: none;
+  }
+
+  .members__close {
+    width: 36px;
+    height: 36px;
+  }
+
+  .members__scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 10px 16px;
+  }
+
+  .member-row {
+    min-height: 44px;
+    padding: 9px 8px;
+  }
+
+  .member-row__name {
+    font-size: 14px;
+  }
+
+  .member-mode-select {
+    height: 32px;
+    max-width: 44vw;
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  /* ---------- AI 管理：单列、卡片间距 12px、按钮 40px ---------- */
+
+  .agents {
+    padding: 12px 12px 28px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .agents__head {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .agents__head .icon-btn {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .agents__title {
+    font-size: 17px;
+  }
+
+  .agents__subtitle {
+    display: none;
+  }
+
+  .agents__head > .btn {
+    flex: none;
+    min-height: 40px;
+    height: 40px;
+    padding: 0 12px;
+  }
+
+  .agents__grid {
+    gap: 12px;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: var(--radius-card);
+  }
+
+  .card__title {
+    font-size: 17px;
+  }
+
+  .agent-list {
+    gap: 12px;
+  }
+
+  .agent-row {
+    padding: 12px;
+    gap: 10px;
+    border-radius: 12px;
+  }
+
+  .agent-row__actions {
+    gap: 8px;
+  }
+
+  .agent-row__actions .btn {
+    flex: 1 1 calc(50% - 4px);
+    min-height: 40px;
+    height: 40px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .agents .input,
+  .agents .input--area {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .agents .card > .btn {
+    min-height: 44px;
+  }
+
+  .token-box__value {
+    font-size: 12px;
+  }
+
+  /* ---------- 空间：单列、卡片间距 12px、按钮 40px ---------- */
+
+  .space {
+    padding: 12px 12px 28px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .space__inner {
+    gap: 12px;
+  }
+
+  .space__head {
+    padding: 0 2px;
+  }
+
+  .space__title {
+    font-size: 17px;
+  }
+
+  .space__subtitle {
+    display: none;
+  }
+
+  .space__loading {
+    padding: 20px 0;
+  }
+
+  .feed-composer {
+    padding: 12px;
+    border-radius: var(--radius-card);
+  }
+
+  .feed-composer__input {
+    min-height: 72px;
+    font-size: 16px;
+  }
+
+  .feed-composer__foot {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .feed-composer__vis {
+    height: 40px;
+    max-width: 40vw;
+    font-size: 16px;
+  }
+
+  .feed-composer__counter {
+    display: none;
+  }
+
+  .feed-composer__submit {
+    min-height: 40px;
+    height: 40px;
+    padding: 0 18px;
+    font-size: 15px;
+  }
+
+  .feed {
+    padding: 12px 12px 6px;
+    border-radius: var(--radius-card);
+  }
+
+  .feed__body {
+    font-size: 16px;
+  }
+
+  .feed__action {
+    height: 40px;
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .feed__comments {
+    padding: 8px 10px;
+  }
+
+  .feed-comments__input {
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .feed-comments__send {
+    min-height: 40px;
+    height: 40px;
+    padding: 0 14px;
+  }
+
+  /* ---------- 登录 / 注册：16px 输入防 iOS 聚焦缩放 ---------- */
+
+  .auth__panel {
+    padding: 20px 16px 16px;
+    border-radius: 16px;
+  }
+
+  .auth .input {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .auth .tab {
+    min-height: 40px;
+  }
+
+  .auth__submit {
+    height: 46px;
+  }
+
+  /* ---------- 弹窗 / Toast ---------- */
+
+  .modal__head {
+    padding: 14px 14px 10px;
+  }
+
+  .modal__title {
+    font-size: 17px;
+  }
+
+  .modal__body {
+    padding: 14px;
+  }
+
+  .modal__foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 14px 14px;
+    padding-bottom: calc(14px + var(--safe-bottom));
+  }
+
+  .modal__hint {
+    font-size: 12px;
+  }
+
+  .modal__foot-actions {
+    margin-left: 0;
+    gap: 8px;
+  }
+
+  .modal__foot .btn {
+    flex: 1 1 0;
+    min-width: 84px;
+    height: 44px;
+    min-height: 44px;
+    white-space: nowrap;
+  }
+
+  .pick-row {
+    min-height: 44px;
+    padding: 8px 9px;
+  }
+
+  .toasts {
+    top: calc(10px + var(--safe-top));
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .toast {
+    max-width: 100%;
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}
