@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 与站点 manifest 的 theme_color / background_color 对齐，避免启动时闪白/闪黑 -->
+    <color name="brand">#12b7f5</color>
+    <color name="status_bar">#f2f3f5</color>
+    <color name="nav_bar">#f2f3f5</color>
+    <color name="window_bg">#f2f3f5</color>
+    <color name="text_primary">#111418</color>
+    <color name="text_secondary">#6b7280</color>
+</resources>

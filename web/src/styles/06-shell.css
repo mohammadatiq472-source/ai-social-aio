@@ -1,0 +1,249 @@
+/* ------------------------------ 三栏主框架 ------------------------------ */
+
+.chat {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 288px;
+  height: 100dvh;
+  background: var(--bg);
+}
+
+/* ---------- 左：会话列表 ---------- */
+
+.conv {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+}
+
+.conv__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 12px 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.conv__me {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.conv__me-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.conv__me-name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 104px;
+}
+
+.conn {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.conn--on {
+  color: var(--ok);
+}
+
+.conn--off {
+  color: var(--warn);
+}
+
+.conv__actions {
+  display: flex;
+  gap: 2px;
+}
+
+.conv__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.4px;
+}
+
+.conv__count {
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--hover);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.conv__list {
+  list-style: none;
+  margin: 0;
+  padding: 0 8px 10px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.conv__empty {
+  padding: 24px 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* 加载失败：和空态分开（失败有原因 + 重试；空态是「真的没有群」） */
+.conv__error {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 20px 12px;
+  color: var(--text-2);
+  font-size: 13px;
+}
+
+.conv__error-text {
+  line-height: 1.5;
+}
+
+.conv__error-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-2);
+  background: var(--warn-bg);
+  border-bottom: 1px solid var(--warn-line);
+}
+
+.conv__item {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  text-align: left;
+  transition: background 0.14s;
+}
+
+.conv__item:hover {
+  background: var(--hover);
+}
+
+.conv__item--active {
+  background: var(--primary-weak);
+}
+
+.conv__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.conv__row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.conv__name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.conv__time {
+  font-size: 12px;
+  color: var(--muted);
+  flex: none;
+}
+
+.conv__preview {
+  flex: 1;
+  min-width: 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge-dot {
+  flex: none;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--badge-dot-bg);
+  color: var(--badge-dot-fg);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+}
+
+.conv__ai {
+  flex: none;
+  padding: 0 5px;
+  border-radius: 6px;
+  background: var(--ai-weak);
+  color: var(--ai);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+  border: 1px solid var(--line);
+}
+
+
+/* 会话表头的 ＋ 菜单：把「新建群聊 / 发现群聊」收在一个入口里，不再多放一个图标 */
+.conv__plus-wrap {
+  position: relative;
+}
+
+.conv__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  min-width: 132px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.conv__menu-item {
+  display: block;
+  width: 100%;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.conv__menu-item:hover {
+  background: var(--hover);
+}

@@ -1,0 +1,18 @@
+node_modules/
+dist/
+dist-ssr/
+coverage/
+test-results/
+playwright-report/
+blob-report/
+.vite/
+*.local
+.DS_Store
+*.log
+.npm-cache/
+# 新窗口的临时诊断脚本，不入库
+tmp-*.ts
+tmp-*.mjs
+
+dist-debug/
+*-merged.glb

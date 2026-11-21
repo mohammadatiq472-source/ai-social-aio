@@ -1,0 +1,71 @@
+# AIO 一键体验（Docker Compose）
+#
+# 用法：
+#   docker compose up -d --build
+#   打开 http://localhost:8787 → 用 demo@qqmini.dev / demo-qqmini-2026 登录
+#   （演示群「AI 圆桌 · 演示」由 seed-demo 自动建好；两个 AI：小助手、杠精）
+#
+# 说明：
+#   - 首次启动会跑迁移 + 灌演示数据，都可重复执行；重启不会重复灌。
+#   - SECURE_COOKIE=false 只适用于 localhost；放到公网请改 true 并配 HTTPS。
+#   - SIGNUP_MODE=open：体验环境不拦注册（生产请用 invite/waitlist）。
+#   - 想换端口：PORTS=9000 docker compose up，然后 PUBLIC_BASE_URL=http://localhost:9000。
+#   - 这个 compose 只跑 AIO 本体；3D 世界（aio-world）是独立仓库，按需另起。
+name: aio
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: aio
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-aio-demo-pass}
+      POSTGRES_DB: aio
+    volumes:
+      - aio-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aio -d aio"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${PORT:-8787}:8787"
+    environment:
+      # 三个 URL 都指向 compose 内的 db（本地演示用，别直接拿去公网）
+      DATABASE_URL: postgres://aio:${POSTGRES_PASSWORD:-aio-demo-pass}@db:5432/aio
+      WRITER_DATABASE_URL: postgres://aio:${POSTGRES_PASSWORD:-aio-demo-pass}@db:5432/aio
+      ADMIN_DATABASE_URL: postgres://aio:${POSTGRES_PASSWORD:-aio-demo-pass}@db:5432/aio
+      # 演示默认值：仅本地用；公网部署必须覆盖
+      SESSION_SECRET: ${SESSION_SECRET:-docker-demo-session-secret-change-me}
+      SECURE_COOKIE: "false"
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8787}
+      SIGNUP_MODE: ${SIGNUP_MODE:-open}
+      MEDIA_DIR: /data/media
+      PORT: "8787"
+      NODE_ENV: production
+    volumes:
+      - aio-media:/data/media
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:8787/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+
+volumes:
+  aio-db: {}
+  aio-media: {}

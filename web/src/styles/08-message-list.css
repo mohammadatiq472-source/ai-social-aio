@@ -1,0 +1,445 @@
+/* ------------------------------ 消息列表 ------------------------------ */
+
+.messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 18px 20px 8px;
+  /* 不要在这里写 scroll-behavior: smooth：
+     贴底 / 回到底部都要「立刻到位」，平滑动画会让同一帧里的 nearBottom() 读到旧位置，
+     导致「一进群就 99+ 条新消息」「翻历史触发不了」这类竞态（实测踩过）。
+     需要平滑滚动的地方（例如 jumpTo 定位某条）自己传 behavior:'smooth'。 */
+}
+
+.messages--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.messages__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 920px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.messages__loading,
+.messages__empty {
+  text-align: center;
+  color: var(--text-2);
+  font-size: 13px;
+  padding: 28px 0;
+}
+
+/* 回看历史时的「N 条新消息」pill：浮在输入栏上方（.chat__main 是 relative 容器） */
+.new-msg-pill {
+  position: absolute;
+  left: 50%;
+  bottom: 78px;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--qq-blue-strong);
+  font-size: 13px;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+}
+
+/* ---------------------------- 「正在输入」浮条 ----------------------------
+   位置在消息滚动区之外、输入栏之上（ChatView <main> 的直接子元素）：
+   放进滚动区会因为内容不足贴在顶部，或者被滚走 */
+.typing {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 20px 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text-2);
+  font-size: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.typing__dots {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.typing__dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-3);
+  animation: typing-bounce 1.2s infinite ease-in-out;
+}
+
+.typing__dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing__dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typing-bounce {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typing__dots i {
+    animation: none;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+}
+
+.empty-state__title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: var(--text-2);
+}
+
+.empty-state__hint {
+  margin: 0;
+  font-size: 13px;
+}
+
+.day-sep {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-3);
+  font-size: 12px;
+  margin: 6px 0;
+}
+
+.day-sep::before,
+.day-sep::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 100%;
+  transition: transform 0.22s ease, opacity 0.22s ease, background 0.3s ease;
+  /* 屏外消息跳过布局/绘制：一次挂 200 条时省掉大量不可见工作（低端机滚动更稳）。
+     contain-intrinsic-size 给个接近真实气泡的高度估计，避免滚动条长度大幅跳变；
+     跳到某条消息时浏览器会强制布局，不影响 jumpSeq。 */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 72px;
+}
+
+.msg--mine {
+  flex-direction: row-reverse;
+}
+
+.msg__col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: min(78%, 640px);
+  gap: 3px;
+}
+
+.msg--mine .msg__col {
+  align-items: flex-end;
+}
+
+.msg__head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 2px;
+}
+
+.msg__name {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.ai-badge {
+  padding: 0 5px;
+  border-radius: 5px;
+  background: var(--ai);
+  color: var(--ai-badge-fg);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 15px;
+  cursor: help;
+}
+
+.msg__owner {
+  font-size: 11px;
+  color: var(--ai-purple-text);
+  cursor: help;
+  border-bottom: 1px dotted var(--msg-owner-bb);
+}
+
+.bubble {
+  padding: 10px 14px;
+  /* QQ 手感：靠发送者一侧的上角切到 4px（对方在左 → 左上角） */
+  border-radius: var(--radius-bubble) var(--radius-bubble) var(--radius-bubble) var(--radius-bubble);
+  border-top-left-radius: 4px;
+  background: var(--bubble-other);
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 2px rgba(26, 26, 26, 0.04);
+  max-width: 100%;
+}
+
+.bubble__body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* 超长消息折叠：8 行 + 「展开全文」。用 line-clamp（DOM 里仍是全文），
+   复制 / 搜索 / 长按都不受影响。按钮继承气泡文字色：自己的气泡是白字，
+   写死 link 蓝会在蓝底上消失。 */
+.bubble__body--clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bubble__more {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 12.5px;
+  text-decoration: underline;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.bubble__more:hover {
+  opacity: 1;
+}
+
+/* 触屏：展开按钮是气泡里唯一的操作入口，给足高度（文字链接通常豁免，这里不豁免） */
+@media (max-width: 760px), (pointer: coarse) {
+  .bubble__more {
+    min-height: 40px;
+  }
+}
+
+
+.msg--mine .bubble {
+  background: var(--bubble-self);
+  border-color: var(--bubble-self);
+  color: var(--bubble-self-fg);
+  border-radius: var(--radius-bubble);
+  border-top-left-radius: var(--radius-bubble);
+  border-top-right-radius: 4px;
+  box-shadow: none;
+}
+
+/* 乐观上屏：半透明 + 上移 4px，收到 seq 后归位 */
+.msg--optimistic {
+  opacity: 0.55;
+  transform: translateY(-4px);
+}
+
+.msg--failed {
+  opacity: 0.85;
+}
+
+.msg--flash .bubble {
+  animation: flash 1.3s ease;
+}
+
+@keyframes flash {
+  0%,
+  100% {
+    box-shadow: var(--shadow-sm);
+  }
+  20%,
+  60% {
+    box-shadow: 0 0 0 3px rgba(43, 127, 255, 0.35);
+  }
+}
+
+.msg__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-2);
+  padding: 0 2px;
+}
+
+.msg--mine .msg__foot {
+  flex-direction: row-reverse;
+}
+
+/* QQ 手感：气泡与时间戳并排，时间戳在「远离头像」的那一侧，底边与气泡对齐。
+   自己的消息用 row-reverse，所以同一个 DOM 顺序在两边都落在气泡外侧。 */
+.msg__bubble-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.msg--mine .msg__bubble-row {
+  flex-direction: row-reverse;
+}
+
+/* 11px 灰字，不换行，不参与选中（复制消息正文时不会带上时间） */
+.msg__stamp {
+  flex: 0 0 auto;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--text-3);
+  padding-bottom: 2px;
+  white-space: nowrap;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 系统消息：居中灰底胶囊，用于表情包分享这类事件反馈（不带头像/气泡/时间戳） */
+.sys-notice {
+  display: flex;
+  justify-content: center;
+  padding: 2px 10px;
+}
+
+.sys-notice span {
+  max-width: 86%;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--sys-notice-span-bg);
+  color: var(--text-3);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+  word-break: break-word;
+}
+
+.msg__pending {
+  color: var(--primary);
+}
+
+.msg__retry {
+  border: none;
+  background: none;
+  color: var(--danger);
+  padding: 0;
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.msg__reply {
+  border: none;
+  background: none;
+  color: var(--text-2);
+  padding: 0;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.msg:hover .msg__reply {
+  opacity: 1;
+}
+
+/* 键盘 Tab 到「回复」时必须能看见：opacity:0 但可聚焦 = 焦点跑到不可见控件上 */
+.msg__reply:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.msg__reply:hover {
+  color: var(--primary);
+}
+
+/* AI 消息顶部的引用条：「回复 @某某：原文前 20 字」 */
+.quote {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  padding: 4px 9px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--ai);
+  background: var(--ai-weak);
+  color: var(--text-2);
+  font-size: 12px;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.quote:hover {
+  background: var(--quote-hover-quote);
+}
+
+.quote__label {
+  flex: none;
+  font-weight: 600;
+  color: var(--ai);
+}
+
+.quote__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-2);
+}
+
+.quote--mine {
+  border-color: var(--quote-mine-bc);
+  border-left-color: var(--primary);
+  background: var(--quote-mine-bg);
+  color: var(--quote-mine-text);
+}
+
+.quote--mine .quote__label {
+  color: var(--primary);
+}
+
+.quote--missing {
+  opacity: 0.75;
+  border-left-style: dashed;
+}
+

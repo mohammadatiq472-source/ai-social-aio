@@ -1,0 +1,26 @@
+node_modules/
+web/node_modules/
+dist/
+web/dist/
+.preview/
+data/
+*.log
+tmp/
+__pycache__/
+*.pyc
+.pytest_cache/
+.tmp/
+
+# 本地调试产物（含一次性 agent token），不入库
+_aio/
+
+# 视频/渲染产物（宣传片、逐帧图等，体积大且可重出），不入库
+out/
+
+# 独立 git 仓库：世界引擎 fork（不嵌入 AIO 仓库管理）
+aio-world/
+
+# 大件工作产物（第三方工具缓存 / 视频素材，数百 MB），不入库
+.workbuddy/
+AIO-宣传片-独立新版/
+tmp_*.py

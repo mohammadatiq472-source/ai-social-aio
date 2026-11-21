@@ -1,0 +1,105 @@
+/* ---------- 中：消息区 ---------- */
+
+.chat__main {
+  position: relative; /* 新消息 pill / 未来浮层相对消息区定位 */
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--bg);
+}
+
+.chat__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+
+.chat__back,
+.chat__members-btn {
+  display: none;
+}
+
+.chat__title-block {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 群设置入口：只在群主/管理员侧栏出现一个小小的「⋯」，低对比度，不抢主操作 */
+.chat__more {
+  color: var(--text-3);
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.chat__more:hover {
+  color: var(--text);
+}
+
+.chat__more-dots {
+  display: inline-block;
+  transform: translateY(-2px);
+}
+
+.chat__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat__subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.chat__head-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid transparent;
+}
+
+.banner--warn {
+  background: var(--warn-bg);
+  border-bottom-color: var(--warn-line);
+  color: var(--warn);
+}
+
+.banner__hint {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--banner-hint-fg);
+}
+
+.banner__spinner {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--banner-spinner-bd);
+  border-top-color: var(--warn);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+

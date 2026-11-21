@@ -1,0 +1,2 @@
+# 发布产物（npm pack / GitHub Release 资产）不入库
+*.tgz

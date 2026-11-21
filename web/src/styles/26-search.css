@@ -1,0 +1,198 @@
+/* ==========================================================================
+   消息搜索：会话列表顶部的输入框 + 结果面板。
+   桌面与手机共用一套规则，只在 ≤760px 调尺寸（搜索面板在手机上是整屏宽，
+   因为会话列表本身就是整屏，不需要单独再做一页）。
+   颜色一律走 01-tokens 的变量，深色模式自动跟随，不在这里写死色值。
+   ========================================================================== */
+
+.conv__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  height: 36px;
+  margin: 8px 10px 4px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--hover);
+}
+
+.conv__search:focus-within {
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--qq-blue);
+}
+
+.conv__search-icon {
+  color: var(--text-3);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.conv__search-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  /* 16px 是硬要求：iOS Safari 在聚焦 <16px 的输入框时会把整页放大（其它输入框都已经是 16）。
+     这里写基础规则而不是只写 ≤760px：iPhone 横屏 844px 会落到「桌面宽度」分支，
+     那时仍然会在聚焦时缩放（前端评审 P1-1）。 */
+  font-size: 16px;
+  outline: none;
+}
+
+.conv__search-input::placeholder {
+  color: var(--text-3);
+}
+
+/* 浏览器自带的清除叉和我们自己的按钮重复，藏掉 */
+.conv__search-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.conv__search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: var(--text-3);
+  color: var(--card);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ---------------- 结果面板 ---------------- */
+
+.sr {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.sr__status {
+  padding: 8px 14px 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sr__list {
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0 8px 8px;
+  overflow-y: auto;
+}
+
+.sr__item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  padding: 9px 10px;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sr__item:hover {
+  background: var(--hover);
+}
+
+.sr__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.sr__conv {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sr__time {
+  flex: 0 0 auto;
+  color: var(--text-3);
+  font-size: 11px;
+}
+
+.sr__sender {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+.sr__ai {
+  padding: 0 4px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.sr__seq {
+  color: var(--text-3);
+  font-size: 11px;
+}
+
+.sr__body {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.45;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.sr__body mark {
+  background: transparent;
+  color: var(--qq-blue-strong);
+  font-weight: 600;
+}
+
+.sr__more {
+  margin: 4px 10px 10px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  color: var(--text-2);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.sr__more:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+@media (max-width: 760px) {
+  .conv__search {
+    height: 38px;
+    margin: 6px 8px 2px;
+  }
+
+  /* 字号已由基础规则统一成 16px，这里不再重复覆盖（重复规则会掩盖以后对基础值的改动） */
+  .sr__item {
+    padding: 10px 8px;
+  }
+}

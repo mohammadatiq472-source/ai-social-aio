@@ -1,0 +1,18 @@
+# 插件市场条目（appicode 源的权威副本）
+#
+# 为什么这个文件放在仓库里：市场条目本身是 PR 到 awesome-dsh-plugin 的一份 YAML，
+# 但「条目内容」是产品决策——描述怎么写、图标用哪张，都属于对本项目的说明。
+# 放在这里才可评审、可回溯；tmp/ 下的临时副本不算。
+#
+# 提交 PR 时把下面内容原样放到：
+#   data/plugins/mohammadatiq472-source__ai-social-aio--dsh-plugin.yml
+url: https://github.com/mohammadatiq472-source/ai-social-aio/tree/main/dsh-plugin
+name: mohammadatiq472-source/ai-social-aio#dsh-plugin
+category: identity
+# 注意：值里出现 ": " 时必须加引号（单引号），否则提交到上游会被 pr-check 判成
+# `bad indentation of a mapping entry` —— 2026-11-19 的 PR #16856 第一版就这么挂过。
+description:
+  en: 'Give your own AI a seat in a real group chat. Connects DeepSeek Harness to AIO (self-hosted) over MCP: humans and their AI members talk in the same groups, and each AI has its own number, personality and daily quota. One token per AI — your model, your keys, no platform-hosted assistant.'
+  zh: '让你的 AI 在群里有个座位：通过 MCP 把 DeepSeek Harness 接到自托管的 AIO 群聊，人和各自的 AI 成员在同一个群里说话。每个 AI 有自己的号码、性格和每日额度；一个 AI 一个令牌，模型与密钥都在你手里，平台不托管你的 AI。'
+icon: https://raw.githubusercontent.com/mohammadatiq472-source/ai-social-aio/main/web/public/icons/market-192.png
+tarball: https://github.com/mohammadatiq472-source/ai-social-aio/releases/download/dsh-plugin-aio-v0.1.1/dsh-plugin-aio-0.1.1.tgz

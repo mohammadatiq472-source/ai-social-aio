@@ -1,0 +1,206 @@
+/* ==========================================================================
+   AIO · 纯手写 CSS（无 Tailwind / 无 UI 库）
+   约定：手机优先。桌面只是「放大版」：三栏 + 顶部标签。
+   手机（≤760px）：底部 Tab / 会话横向推入 / 底部输入栏 / 成员底部抽屉。
+   配色与圆角一律走 :root 变量；AI 成员一律用墨灰 --ai，身份只靠头像右下角的小字，
+   不加描边、不给专属色（契约 §10 里「紫色描边 + AI 角标」的写法已废弃，2026-11-15 视觉方向调整，
+   别再按旧稿实现）。
+   ========================================================================== */
+
+:root {
+  /* ---------- QQ 视觉语言（唯一色板，禁止在组件里写字面色值） ---------- */
+  --qq-blue: #12b7f5;
+  --qq-blue-strong: #0099ff;
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --line: #e5e6eb;
+  --text: #1a1a1a;
+  /* 对比度（WCAG AA，普通字号 4.5:1）：正文 17.4；次要文字 5.78(白)/5.20(灰底)；
+     三级文字（11px 时间戳/日期分隔）5.61/5.06。原来 #8a8f99 只有 3.25、#b8bcc4 只有 1.72，
+     小数号元信息几乎看不清（2026-11-14 前端审查 P1-3）。改值时用 scripts/check-contrast.mjs 守。 */
+  --text-2: #5f6673;
+  --text-3: #666b73;
+  /* 自己的消息气泡：按微信配色（浅绿底 + 深色字）。别人发的仍是白底深字（--bubble-other）。
+     之前是品牌蓝底白字，白字对比度只有 3.00:1；绿底深字 ≈13:1，同时更像微信。 */
+  --bubble-self: #95ec69;
+  --bubble-self-fg: #111111;
+  --bubble-other: #ffffff;
+  --danger: #f5483b;
+  --radius-bubble: 18px;
+  --radius-card: 14px;
+
+  /* ---------- 派生令牌 / 旧类名兼容（历史样式仍引用这些名字） ---------- */
+  --panel: var(--card);
+  --panel-soft: #f7f8fa;
+  --muted: var(--text-2);
+  --line-strong: #dcdfe5;
+  --primary: var(--qq-blue-strong);
+  --primary-weak: #e8f6ff;
+  --hover: #f2f3f5;
+  /* AI 不再使用紫色（AI 风最典型的一条）：统一按"墨灰"处理，
+     身份只靠头像右下角的小字，不靠颜色 */
+  --ai: #4b555c;
+  --ai-weak: #eef1f3;
+  --ai-bubble: var(--bubble-other);
+  --warn: #b7791f;
+  --warn-bg: #fff7e0;
+  --warn-line: #f2d38b;
+  --ok: #18a058;
+  --radius: var(--radius-card);
+  --radius-sm: 10px;
+  --font: -apple-system, 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --shadow-sm: 0 1px 2px rgba(26, 26, 26, 0.06);
+  --shadow-md: 0 10px 30px rgba(26, 26, 26, 0.12);
+  --shadow-lg: 0 24px 64px rgba(26, 26, 26, 0.18);
+  /* ---------- 语义色（门控评审 §4-7：组件里不写字面色值） ---------- */
+
+  /* 一次性色值（组件里不再写字面色值；这些是机械收敛出来的窄口 token） */
+  --auth-v: #f0e9ff;
+  --token-box-warn-fg: #8a6a12;
+  --btn-danger-bc: #f3c9ca;
+  --mention-item-kind-is-user-bg: #eef2f9;
+  --msg-mine-voice-fg: #111111;
+  --msg-mine-voice-icon: rgba(17, 17, 17, 0.72);
+  --msg-mine-voice-bar: rgba(17, 17, 17, 0.34);
+  --video-play-fg: #ffffff;
+  --feed-action-hover-not-disabled-action: #f3f6fc;
+  --msg-video-blank-bg-2: #8fa0bd;
+  --pick-row-checked-bc: #cfe0ff;
+  --me-profile-cam-fg: #fff;
+  --avatar-fg: #fff;
+  --msg-video-blank-bg: #b8c2d6;
+  --quote-mine-bc: #c9dcff;
+  --btn-danger-hover-not-disabled-btn--danger: #fff5f5;
+  --switch-knob-bg: #fff;
+  --lightbox-bg: #000;
+  --banner-spinner-bd: #e3c983;
+  --composer-hint-fg: #5f6673;
+  --badge-dot-fg: #fff;
+  --ai-badge-fg: #fff;
+  --btn-primary-hover-not-disabled-btn--primary: #1f70ec;
+  --msg-owner-bb: #cbbcf0;
+  --msg-video-player-bg: #000;
+  --feed-failed-bc: #f3c9ca;
+  --msg-image-bg: #eef0f3;
+  --token-box-row-dt-fg: #8a6a12;
+  --lightbox-close-fg: #fff;
+  --toast-fg: #fff;
+  --rich-card-btn-primary-fg: #fff;
+  --badge-dot-bg: #d9363e;
+  --sys-notice-span-bg: #f1f2f4;
+  --banner-hint-fg: #9a7f45;
+  --icon-btn-hover-icon-btn: #eef2f9;
+  --mention-pop-hint-fg: #aab2c0;
+  --feed-failed-bg: #fffafa;
+  --token-box-bg: #fffdf5;
+  --media-prefers-color-scheme-dark-msg-image-prefers-color-: #2a2a2e;
+  --token-box-once-fg: #b45309;
+  --btn-danger-hover-not-disabled-bc: #eba9ab;
+  --quote-hover-quote: #e9ecee;
+  --btn-primary-fg: #fff;
+  --auth-bg: #e3edff;
+  /* ---------- 语义色（门控评审 §4-7：组件里不写字面色值） ---------- */
+  /* ---------- 语义色（门控评审 §4-7：组件里不写字面色值） ---------- */
+  /* ---------- 语义色（门控评审 §4-7：组件里不写字面色值） ---------- */
+  /* ---------- 语义色（门控评审 §4-7：组件里不写字面色值） ---------- */
+  --ok-weak-bg: #e8f7ee;
+  --ok-weak-border: #bfe7cf;
+  --ok-text: #167d46;
+  --neutral-weak-bg: #f1f3f7;
+  --neutral-weak-border: #c3cbda;
+  --neutral-weak-text: #5d6678;
+  --danger-weak-bg: #fdecec;
+  --danger-weak-border: #f6c6c7;
+  --danger-weak-text: #b4282c;
+  --warn-weak-bg: #fff1d6;
+  --warn-weak-border: #f0dca8;
+  --warn-weak-text: #a06a00;
+  --info-weak-bg: #e6f0ff;
+  --info-weak-border: #cfe0ff;
+  --info-weak-text: #2b6cb0;
+  --quote-bg: #f1f3f7;
+  --quote-border: #dfe3ea;
+  --quote-text: #5d6678;
+  --quote-mine-bg: #e6f0ff;
+  --quote-mine-border: #cfe0ff;
+  --quote-mine-text: #33507d;
+  --code-chip-bg: #23293a;
+  --code-chip-text: #a8e3a5;
+  --snippet-bg: #1f2430;
+  --snippet-text: #dfe6f3;
+  --feed-liked-bg: #fff0f1;
+  --feed-liked-strong: #ffe4e6;
+  --feed-liked-border: #f6c9cb;
+  --feed-liked-text: #e5484d;
+  /* 名字是历史遗留（purple），**值不改**、也不代表 AI 身份色：
+     - weak 是近白的中性淡紫，只做成员面板 AI 行淡底，视觉上几乎无色；
+     - text 仍是紫色，实际用在「主人」小字（08-message-list.css 的 .msg__owner、
+       10-members.css 的 .member-row__owner），属于主人标签，不是 AI 身份色。
+     真要彻底去紫需要单独决策（会动真实 UI），不要顺着注释偷偷改色值。 */
+  --ai-purple-weak: #fcfaff;
+  --ai-purple-text: #9b8ac4;
+  /* UA 原生控件（搜索框清除键/滚动条/日期选择器/自动填充底色）跟随深浅色；
+     写死 light 时 18-dark.css 换了 body 配色，控件仍是浅色，深色下像贴纸。 */
+  color-scheme: light dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+html,
+body {
+  /* 手机优先：任何页面都不允许出现横向滚动条 */
+  max-width: 100%;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  /* clip 不会把 overflow-y 连带变成 auto，避免多出一层滚动容器；老浏览器退回 hidden */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+a {
+  color: var(--primary);
+}
+

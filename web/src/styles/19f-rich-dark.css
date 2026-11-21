@@ -1,0 +1,22 @@
+/* ---------- 深色 ---------- */
+
+@media (prefers-color-scheme: dark) {
+  .msg__image {
+    background: var(--media-prefers-color-scheme-dark-msg-image-prefers-color-);
+  }
+
+  .msg__image--broken,
+  .msg__unsupported {
+    background: var(--card);
+  }
+
+  .composer__upload,
+  .sticker-panel {
+    background: var(--card);
+  }
+
+  .sticker-item:hover {
+    background: var(--hover);
+  }
+}
+

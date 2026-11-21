@@ -1,0 +1,56 @@
+{
+  "name": "aio-world",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "description": "AIO 的 3D 世界 —— 按规格书独立实现（MIT），不派生自 Hyperfy",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "verify": "node tools/verify-physics.mjs",
+    "verify:perf": "node tools/verify-perf.mjs",
+    "verify:scene": "node tools/verify-scene.mjs",
+    "verify:debug": "node tools/verify-debug-panel.mjs --mode dev",
+    "verify:debug:prod": "node tools/verify-debug-panel.mjs --mode prod --root dist",
+    "verify:treeshake": "node tools/verify-debug-treeshake.mjs",
+    "license-check": "node scripts/license-check.mjs",
+    "measure:budget": "node --import ./scripts/ts-node-loader.mjs tools/measure-frame-budget.mjs",
+    "measure:fps": "node tools/measure-fps.mjs",
+    "measure:assets": "node tools/measure-assets.mjs",
+    "build:character": "node tools/build-character.mjs",
+    "verify:asset": "node --import ./scripts/ts-node-loader.mjs tools/verify-asset-three.mjs",
+    "verify:agents": "node --import ./scripts/ts-node-loader.mjs tools/verify-agents-wiring.mjs",
+    "verify:locomotion": "node --import ./scripts/ts-node-loader.mjs tools/verify-locomotion.mjs",
+    "explain:overrun": "node tools/explain-overrun.mjs",
+    "smoke:agents": "node tools/smoke-agents.mjs",
+    "build:sandbox": "tsc --noEmit && node --import ./scripts/sandbox-esbuild-loader.mjs ./node_modules/vite/bin/vite.js build --config vite.config.sandbox.mjs --configLoader native",
+    "test:sandbox": "node --expose-gc --import ./scripts/ts-node-loader.mjs scripts/run-tests-sandbox.mjs"
+  },
+  "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.21.0",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "^4.5.1",
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2",
+    "@types/three": "^0.170.0",
+    "meshoptimizer": "^1.3.0",
+    "sharp": "^0.35.5",
+    "terser": "^5.51.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8"
+  }
+}

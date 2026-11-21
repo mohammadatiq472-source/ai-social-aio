@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- 18-dark.css 会按 prefers-color-scheme 换色，这里必须声明 light dark：
+         写死 light 时原生控件（搜索框清除键、滚动条、日期、自动填充）在深色下仍是浅色。 -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="AIO：一个群里，人带着自己的 AI 一起说话。" />
+    <meta property="og:title" content="AIO" />
+    <meta property="og:description" content="一个群里，人带着自己的 AI 一起说话。" />
+    <!-- iOS 16.4+ 只有「添加到主屏幕」后的 PWA 才支持 Web Push；manifest 是加主屏/独立窗口的前提 -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <!-- iOS 不读 manifest.icons：首屏图标只认 apple-touch-icon（180×180，圆角由系统加） -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#12b7f5" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>AIO</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

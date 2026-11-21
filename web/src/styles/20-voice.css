@@ -1,0 +1,339 @@
+/* ==========================================================================
+   M2：语音录制 + 播放条
+   ========================================================================== */
+
+/* ---------- 输入栏麦克风 / 录制中状态 ---------- */
+
+.composer__tool--mic.is-recording {
+  color: var(--danger);
+  background: rgba(245, 72, 59, 0.12);
+}
+
+.composer__tool--mic.is-recording svg {
+  animation: rec-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes rec-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+}
+
+/* 录制中的计时条（占用输入框的位置，保留工具条上的麦克风按钮用于「再点一下结束」） */
+.composer__rec {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 6px 0 8px;
+  border-radius: 14px;
+  background: var(--hover);
+}
+
+.composer__rec-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--danger);
+  animation: rec-pulse 1s ease-in-out infinite;
+}
+
+.composer__rec-time {
+  flex: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.composer__rec-hint {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.composer__rec-cancel {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.composer__rec-cancel:hover {
+  color: var(--danger);
+}
+
+/* 上滑到取消区 */
+.composer__rec.is-cancel {
+  background: rgba(245, 72, 59, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(245, 72, 59, 0.45);
+}
+
+.composer__rec.is-cancel .composer__rec-hint {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.composer__rec.is-cancel .composer__rec-dot {
+  animation: none;
+}
+
+/* 语音上传条的图标位 */
+.composer__upload-thumb--voice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  background: var(--primary-weak);
+}
+
+.composer__upload-thumb--voice svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- 语音播放胶囊 ---------- */
+
+.voice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--bubble-other);
+  color: var(--text);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.voice:hover {
+  border-color: var(--line-strong);
+}
+
+.voice__play {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+}
+
+.voice__play svg {
+  width: 18px;
+  height: 18px;
+}
+
+.voice__wave {
+  flex: 1 1 auto;
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 18px;
+}
+
+.voice__bar {
+  flex: 1 1 0;
+  min-width: 1px;
+  border-radius: 2px;
+  background: var(--line-strong);
+  transition: background 0.12s;
+}
+
+.voice__bar--on {
+  background: var(--primary);
+}
+
+.voice__time {
+  flex: none;
+  font-size: 12px;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 自己的语音：跟自己的气泡同色（微信绿 + 深色字/波形） */
+.msg--mine .voice {
+  background: var(--bubble-self);
+  border-color: var(--bubble-self);
+  color: var(--msg-mine-voice-fg);
+}
+
+.msg--mine .voice__play,
+.msg--mine .voice__time {
+  color: var(--msg-mine-voice-icon);
+}
+
+.msg--mine .voice__bar {
+  background: var(--msg-mine-voice-bar);
+}
+
+.msg--mine .voice__bar--on {
+  background: var(--msg-mine-voice-fg);
+}
+
+.voice--active {
+  border-color: var(--primary);
+}
+
+.msg--mine .voice--active {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
+}
+
+.voice--error {
+  border-color: var(--danger);
+}
+
+.voice--broken {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 20px;
+  color: var(--text-2);
+  font-size: 12.5px;
+}
+
+/* ---------- 手机 ---------- */
+
+@media (max-width: 760px) {
+  .composer__tool {
+    width: 34px;
+    height: 34px;
+  }
+
+  .composer__tool svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .composer__rec {
+    min-height: 38px;
+    padding: 0 4px 0 8px;
+  }
+
+  .voice {
+    min-height: 42px;
+  }
+}
+
+/* 很窄的手机（320 宽）：工具条再收一点，别把输入框挤没了 */
+@media (max-width: 360px) {
+  .composer__tool {
+    width: 30px;
+    height: 30px;
+  }
+
+  .composer__tool svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .composer__box {
+    padding-left: 10px;
+    gap: 4px;
+  }
+
+  .composer__tools {
+    gap: 0;
+  }
+}
+
+
+
+
+/* ---------- 视频消息（M3） ---------- */
+.msg__video {
+  position: relative;
+  display: block;
+  width: min(240px, 62vw);
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--quote-border);
+  cursor: pointer;
+  line-height: 0;
+}
+
+.msg__video-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.msg__video-blank {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--msg-video-blank-bg), var(--msg-video-blank-bg-2));
+}
+
+.msg__video-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: var(--video-play-fg);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.msg__video-play svg {
+  width: 26px;
+  height: 26px;
+}
+
+.msg__video-player {
+  display: block;
+  width: min(280px, 68vw);
+  max-height: 340px;
+  border-radius: var(--radius-card);
+  background: var(--msg-video-player-bg);
+}
+
+.msg__video--broken {
+  display: grid;
+  place-items: center;
+  width: min(240px, 62vw);
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-card);
+  border: 1px dashed var(--line);
+  color: var(--text-3);
+  font-size: 13px;
+  background: var(--card);
+}
+

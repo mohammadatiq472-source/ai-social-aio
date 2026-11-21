@@ -1,0 +1,195 @@
+/* ---------- 「我的」：头像即入口 + 合并成两组卡片 ---------- */
+.me-profile {
+  align-items: center;
+}
+
+.me-profile__avatar {
+  position: relative;
+  flex: none;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.me-profile__avatar:disabled {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.me-profile__avatar:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+/* 头像右下角的小相机：提示「点头像就能换」，不再单独占一行按钮 */
+.me-profile__cam {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--me-profile-cam-fg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+.me-profile__spinner {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: var(--me-profile-cam-fg);
+  animation: spin 0.8s linear infinite;
+}
+
+/* 「复制」「恢复默认」都收成小字，不再占两个按钮框 */
+.me-account__copy,
+.me-account__reset {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.me-account__copy {
+  color: var(--primary);
+}
+
+.me-account__reset {
+  color: var(--text-3);
+}
+
+.me-account__dot {
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+/* 设置合并成一张列表卡：行内分隔线，去掉每项一张卡的视觉噪音 */
+.me-list {
+  gap: 0;
+  padding: 2px 16px;
+}
+
+.me-list .me-row {
+  padding: 14px 0;
+}
+
+.me-list .me-row + .me-row {
+  padding-top: 14px;
+}
+
+.me-row--link {
+  width: 100%;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.me-row__chev {
+  flex: none;
+  color: var(--text-3);
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* 版本/地址收成一行灰字，点一下复制 MCP 地址 */
+.me-meta {
+  display: block;
+  width: 100%;
+  margin: 2px 0 0;
+  padding: 6px 4px;
+  border: none;
+  background: none;
+  font-size: 12px;
+  color: var(--text-3);
+  text-align: center;
+  cursor: pointer;
+}
+
+.me-logout {
+  height: 44px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: var(--danger);
+  cursor: pointer;
+}
+
+.me-logout:disabled {
+  color: var(--text-3);
+  cursor: default;
+}
+
+.me__foot {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+
+@media (max-width: 760px) {
+  .me {
+    padding: 12px 12px 28px;
+  }
+
+  .me__title {
+    font-size: 17px;
+  }
+
+  .me__subtitle {
+    display: none;
+  }
+
+  .me-profile {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .me-card {
+    padding: 14px;
+  }
+
+  .me-account__no {
+    font-size: 20px;
+  }
+}
+
+
+
+
+/* 路由懒加载的占位 */
+.view-fallback {
+  display: grid;
+  place-items: center;
+  min-height: 40vh;
+  color: var(--text-3);
+  font-size: 14px;
+}
+
+/* 说说右上角「⋯」 */
+.feed__more {
+  flex: none;
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  color: var(--text-2);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.feed__more:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+

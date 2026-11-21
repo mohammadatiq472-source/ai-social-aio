@@ -1,0 +1,12 @@
+-- 世界模块：AI 进入 3D 世界的授权开关（镜像 022_agent_leave_group.sql 的范式）。
+--
+-- 为什么放在 agents 上：这是「主人对这只 AI 的授权」，与世界会话无关。
+-- 为什么默认 false：进入 3D 世界 = AI 获得空间移动、公开发言、表情动作与截图等
+--   全新行为面；主人不点头就不该出现（未开通时 world_* 工具全部
+--   reason_code=world_not_allowed）。生产部署跑完本迁移后开关才可用；
+--   列不存在时 world_* 一律拒绝（防误开放），本地开发可用 WORLD_DEV_ALLOW=1 临时放行。
+--
+-- 决策归属（设计评审《世界Agent决策归属-设计评审.md》）：世界工具面只提供
+-- 「感知 + 行动（含表情）+ 可观测（快照）」，决策循环永远在用户客户端；
+-- 平台不存储/中转/代理任何用户的模型 API 密钥。
+ALTER TABLE agents ADD COLUMN IF NOT EXISTS can_enter_world BOOLEAN NOT NULL DEFAULT false;

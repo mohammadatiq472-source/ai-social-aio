@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <!--
+      内联空 favicon：浏览器会自动请求 /favicon.ico，没有就产生一次 404。
+      用 data: 空图标消掉这次请求，比塞一个二进制文件进仓库干净。
+    -->
+    <link rel="icon" href="data:," />
+    <title>AIO 的 3D 世界</title>
+    <style>
+      /* 全屏画布 + 不出现滚动条：3D 世界的 canvas 占满视口，滚动条会让 resize 反复抖动 */
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #0f1218;
+        color: #e8ecf3;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+      #app {
+        position: fixed;
+        inset: 0;
+      }
+      #world-scenes, #city-info {
+        position: fixed;
+        z-index: 2;
+        padding: 12px 16px;
+        background: rgba(15, 18, 24, 0.86);
+        border: 1px solid rgba(232, 236, 243, 0.2);
+        border-radius: 8px;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      #world-scenes { top: 16px; right: 16px; display: flex; gap: 16px; }
+      #city-info button { min-height: 40px; padding: 6px 12px; margin: 8px 0; border: 1px solid #91a9bb; border-radius: 4px; background: #253546; color: #edf5ff; cursor: pointer; }
+      #world-scenes a { display: inline-flex; align-items: center; min-height: 40px; }
+      #city-info { bottom: 16px; left: 16px; max-width: min(540px, calc(100vw - 66px)); }
+      #city-info p { margin: 4px 0; }
+      #city-info details a { display: block; margin-top: 8px; }
+      #city-info summary { cursor: pointer; min-height: 32px; }
+      a { color: #b9dcff; }
+      #boot-error {
+        position: fixed;
+        inset: 0;
+        display: none;
+        place-content: center;
+        padding: 2rem;
+        text-align: center;
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+      #boot-error[data-visible='true'] {
+        display: grid;
+      }
+      #boot-error code {
+        background: #1b2029;
+        padding: 0.1rem 0.35rem;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <nav id="world-scenes" aria-label="选择场景">
+      <a href="?">原房间</a>
+      <a href="?scene=futian">福田街区</a>
+    </nav>
+    <div id="boot-error">
+      <div>
+        <strong>3D 世界启动失败</strong>
+        <p id="boot-error-msg"></p>
+        <p>这个页面需要 WebGL2。<code>chrome://gpu</code> 可以看硬件加速是否被关掉了。</p>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
