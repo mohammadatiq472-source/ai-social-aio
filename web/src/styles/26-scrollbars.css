@@ -1,0 +1,33 @@
+/* ==========================================================================
+   滚动条：统一用细的、低对比度的自定义滚动条。
+   为什么：Windows 浏览器原生滚动条又宽又亮，列表一多就成了页面里最显眼的东西；
+   这里只改外观，不改滚动行为（列表内部滚动，页面本身不滚）。
+   ========================================================================== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-3);
+}
+
+/* 需要完全隐藏滚动条的地方（横向 tab 条等）保持原样 */
+.sticker-tabs {
+  scrollbar-width: none;
+}

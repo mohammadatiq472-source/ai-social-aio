@@ -1,0 +1,218 @@
+/* ==========================================================================
+   站务「邀请」页：生成站务码（一次性明文）+ 全站邀请码列表 + 吊销
+   复用 admin__empty / admin-card__btn / token-box，颜色只用 token。
+   ========================================================================== */
+
+.admin-invites {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-invites__hint {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.admin-invites__card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-invites__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.admin-invites__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-invites__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.admin-invites__grid .field {
+  margin-bottom: 0;
+}
+
+.admin-invites__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.admin-invites__error {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--danger);
+}
+
+.admin-invites__plain {
+  margin-bottom: 0;
+}
+
+.admin-invites__codes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-invites__code {
+  font-size: 12.5px;
+}
+
+.admin-invites__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-invites__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--panel-soft);
+}
+
+.admin-invites__item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.admin-invites__prefix {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+
+.admin-invites__status {
+  flex: none;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.admin-invites__status--valid {
+  background: var(--ok-weak-bg);
+  border-color: var(--ok-weak-border);
+  color: var(--ok-text);
+}
+
+.admin-invites__status--revoked {
+  background: var(--danger-weak-bg);
+  border-color: var(--danger-weak-border);
+  color: var(--danger-weak-text);
+}
+
+.admin-invites__status--expired {
+  background: var(--warn-weak-bg);
+  border-color: var(--warn-weak-border);
+  color: var(--warn-weak-text);
+}
+
+.admin-invites__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+.admin-invites__badge {
+  padding: 1px 6px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.admin-invites__badge--system {
+  background: var(--primary-weak);
+  border-color: var(--qq-blue);
+  color: var(--qq-blue-strong);
+}
+
+.admin-invites__badge--user {
+  background: var(--neutral-weak-bg);
+  border-color: var(--neutral-weak-border);
+  color: var(--neutral-weak-text);
+}
+
+.admin-invites__note {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.admin-invites__item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-invites__created {
+  color: var(--text-3);
+  font-size: 11.5px;
+}
+
+.admin-invites__pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.admin-invites__pager-text {
+  color: var(--text-2);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 760px) {
+  .admin-invites__card {
+    padding: 12px;
+  }
+
+  .admin-invites__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

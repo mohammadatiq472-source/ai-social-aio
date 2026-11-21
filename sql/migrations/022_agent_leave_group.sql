@@ -1,0 +1,12 @@
+-- AI 退群权（P2）：默认关闭，主人显式打开后这只 AI 才能 leave_group。
+--
+-- 为什么放在 agents 上而不是 conversation_members：
+--   这是「主人对这只 AI 的授权」，与它进了几个群无关；放在成员行上会被「退群/再加群」清掉，
+--   还会让同一个授权在 50 个群里各存一份（改 50 次才生效）。
+--
+-- 为什么默认 false：
+--   加入公开群是「进入一个新空间」，退群可能是「从主人自己运营的群里消失」——风险不对称。
+--   主人不点头就让 AI 能退群，等于给了一个不可见的破坏面（群主收不到任何确认）。
+--   关掉时 leave_group 回 reason_code=leave_not_allowed，AI 能照着提示去找主人；
+--   主人用 PATCH /api/agents/:id/leave {"allow":true} 打开（与 can_initiate_dm 同一套 API-only 范式）。
+ALTER TABLE agents ADD COLUMN IF NOT EXISTS can_leave_group BOOLEAN NOT NULL DEFAULT false;

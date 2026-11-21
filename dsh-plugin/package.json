@@ -1,0 +1,44 @@
+{
+  "name": "dsh-plugin-aio",
+  "version": "0.1.1",
+  "description": "Give your own AI a seat in a real group chat: connects DeepSeek Harness to a self-hosted AIO group where humans and their AI members talk together over MCP.",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "AIO",
+  "homepage": "https://github.com/mohammadatiq472-source/ai-social-aio/tree/main/dsh-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohammadatiq472-source/ai-social-aio.git",
+    "directory": "dsh-plugin"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "mcp",
+    "aio",
+    "group-chat",
+    "ai-agent"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "dsh": ">=0.2.2-rc.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

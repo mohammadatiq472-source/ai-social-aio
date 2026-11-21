@@ -1,0 +1,312 @@
+/* ---------- 外链富内容：文件包 / HTML 在线预览 / 「外链」标（契约 docs/富内容外链.md §4） ---------- */
+
+/* 外链媒体（图片/语音/视频）：套一层定位容器，右上角挂「外链」标。
+   站内附件（attachmentId > 0）不套，视觉与原来完全一致。 */
+.msg__ext-wrap {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* 外链卡片：浅灰边 + 12px 圆角 + 次要文字，跟现有气泡同一套变量 */
+.rich-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(300px, 80vw);
+  max-width: 100%;
+  min-width: 0;
+  padding: 10px 12px 11px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 「外链」小标：绝对定位在右上角，不抢内容、不挡点击 */
+.rich-card__ext {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-2);
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* 语音胶囊只有 40px 高：外链标改成并排小标，别压在波形和时长上 */
+.msg__ext-wrap--voice {
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.msg__ext-wrap--voice .rich-card__ext {
+  position: static;
+  margin-top: 1px;
+}
+
+/* ---------- 外链媒体的「点击加载」占位（Q14） ----------
+   为什么默认不加载：外链图片/语音/视频的 src 由站外域名提供，直接请求会把访问者
+   IP / UA / 时间送给对方（1px 追踪图）。占位阶段零请求，用户点了才挂 src。
+   站内附件（attachmentId > 0）不经过这个占位，视觉与自动加载行为都不变。 */
+.msg__ext-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3px;
+  width: min(220px, 60vw);
+  min-height: 92px;
+  padding: 12px 14px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  color: var(--text-2);
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.msg__ext-gate:hover {
+  background: var(--hover);
+}
+
+.msg__ext-gate:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.msg__ext-gate__host {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.msg__ext-gate__text {
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.msg__ext-gate__note {
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: var(--text-3);
+}
+
+/* 语音占位：贴近语音胶囊的行高，别把消息列表撑开 */
+.msg__ext-gate--voice {
+  width: min(210px, 58vw);
+  min-height: 40px;
+  padding: 4px 12px;
+  gap: 1px;
+}
+
+.msg__ext-gate--voice .msg__ext-gate__host {
+  font-size: 11.5px;
+}
+
+.msg__ext-gate--voice .msg__ext-gate__text {
+  font-size: 12px;
+}
+
+/* 视频占位：按 16:9 预留尺寸，点开后不会跳布局 */
+.msg__ext-gate--video {
+  width: min(240px, 62vw);
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+}
+
+.rich-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  /* 右边给「外链」标留出位置，长文件名不会钻到标下面 */
+  padding-right: 34px;
+}
+
+.rich-card__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--panel-soft);
+  color: var(--text-2);
+}
+
+.rich-card__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.rich-card__icon--web {
+  color: var(--primary);
+  background: var(--primary-weak);
+}
+
+.rich-card__meta {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rich-card__name {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rich-card__sub {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--text-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rich-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.rich-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 12.5px;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.rich-card__btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.rich-card__btn--primary {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--rich-card-btn-primary-fg);
+}
+
+.rich-card__btn--primary:hover {
+  color: var(--rich-card-btn-primary-fg);
+  filter: brightness(1.04);
+}
+
+/* 压缩包清单：只列名字与大小，最多先展开一屏，超出可滚 */
+.rich-filelist {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 168px;
+  margin: 0;
+  padding: 7px 0 0;
+  border-top: 1px dashed var(--line);
+  list-style: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.rich-filelist__item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-2);
+}
+
+.rich-filelist__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rich-filelist__size {
+  flex: none;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* HTML 在线预览：宽度 100%、无边框；高度由内联 style 夹在 160..640 */
+.rich-html__frame {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  border-radius: 8px;
+  background: var(--rich-card-btn-primary-fg);
+}
+
+/* 深色模式：小标和卡片底色跟着走（放这里覆盖前面那条浅色定义） */
+@media (prefers-color-scheme: dark) {
+  .rich-card {
+    background: var(--panel-soft);
+    border-color: var(--line-strong);
+  }
+
+  .rich-card__ext {
+    background: rgba(28, 28, 30, 0.9);
+    border-color: var(--line-strong);
+    color: var(--text-2);
+  }
+
+  .rich-card__btn {
+    background: transparent;
+  }
+
+  .rich-card__btn--primary {
+    background: var(--primary);
+    color: var(--rich-card-btn-primary-fg);
+  }
+}
+
+/* 手机（≤360）：卡片再收一点，别顶到气泡边缘外 */
+@media (max-width: 360px) {
+  .rich-card {
+    width: min(260px, 84vw);
+    padding: 9px 10px 10px;
+  }
+
+  .rich-card__name {
+    font-size: 13px;
+  }
+}
+

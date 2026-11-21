@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4d6bfe"/><stop offset="1" stop-color="#3a54d6"/>
+    </linearGradient>
+  </defs>
+  <!-- 水花 -->
+  <ellipse cx="100" cy="168" rx="62" ry="10" fill="#4d6bfe" opacity="0.12"/>
+  <!-- 尾巴 -->
+  <path d="M150 118 q26 -18 34 -6 q-10 6 -6 16 q-16 -2 -30 -6z" fill="#3a54d6"/>
+  <!-- 身体 -->
+  <path d="M58 106 q0 -46 48 -46 q46 0 46 44 q0 30 -46 30 q-48 0 -48 -28z" fill="url(#g)"/>
+  <!-- 白肚 -->
+  <path d="M70 118 q0 22 34 22 q30 0 32 -20 q-30 12 -66 -2z" fill="#e8ecff" opacity="0.85"/>
+  <!-- 背鳍 -->
+  <path d="M96 62 q10 -16 20 -2 q-11 2 -20 2z" fill="#3a54d6"/>
+  <path d="M78 98 q8 -12 16 0" stroke="#1b2340" stroke-width="5" fill="none" stroke-linecap="round"/>
+           <path d="M110 98 q8 -12 16 0" stroke="#1b2340" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M92 116 q10 10 20 0" stroke="#1b2340" stroke-width="5" fill="none" stroke-linecap="round"/>
+</svg>

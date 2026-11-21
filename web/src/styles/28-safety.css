@@ -1,0 +1,76 @@
+/* ==========================================================================
+   AI 身份提示条（好友列表 + 会话顶部）
+   群里成员复杂，不做逐条打标；这里只覆盖两种「一对一人机关系」：
+     1. 好友列表里 type === 'agent' 的好友，名字下方挂一条；
+     2. c2c 私聊里对端是 agent 时，会话头栏下方挂一条通栏。
+   颜色全部走 --warn-weak-bg / --warn-weak-text / --warn-weak-border：
+   组件里零字面色值（scripts/check-style-tokens.mjs 的门禁），深色由 18-dark.css 的 token 值接管。
+   ========================================================================== */
+
+.ai-note {
+  /* inline-flex + align-self:flex-start：在 .friend-row__main（纵向 flex）里按内容宽度贴左，
+     而不是拉满整行 —— 拉满会让黄色块压到头像中线，视觉上「好友行变形了」 */
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  max-width: 100%;
+  min-height: 22px;
+  margin: 0;
+  padding: 0 8px;
+  border: 1px solid var(--warn-weak-border);
+  border-radius: 6px;
+  background: var(--warn-weak-bg);
+  color: var(--warn-weak-text);
+  font-size: 11.5px;
+  line-height: 1.35;
+  /* 名字/号码本来各占一行：这里不加 margin，好友行高度只多出一条提示条 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 会话顶部通栏：仍然是正常文档流的一块（不要改 position），
+   这样 .messages（flex:1 + overflow-y:auto）的 clientHeight 会自己变小，
+   贴底 / 回到底部 / 翻历史三套逻辑都不用动。 */
+.ai-note--chat {
+  display: flex;
+  align-self: stretch;
+  min-height: 26px;
+  padding: 0 16px;
+  border: 0;
+  border-bottom: 1px solid var(--warn-weak-border);
+  border-radius: 0;
+  font-size: 12px;
+  /* 窄屏允许折成两行：提示被省略号吃掉半句等于没提示 */
+  white-space: normal;
+}
+
+/* 手机端（≤760px）：跟 17-mobile.css 里 .chat__head 的 10px 内边距对齐，
+   否则提示条会比头栏的文字更靠里，看起来像错位 */
+@media (max-width: 760px) {
+  .ai-note--chat {
+    padding: 0 10px;
+  }
+}
+
+/* 提示条右侧的关闭按钮：只关闭「这一次打开会话」的提示 */
+.ai-note--chat .ai-note__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-note__close {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0 2px;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.ai-note__close:hover {
+  opacity: 1;
+}

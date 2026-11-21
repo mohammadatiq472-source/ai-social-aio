@@ -1,0 +1,12 @@
+# 安卓壳的本地环境与密钥：绝不入库
+local.properties
+keystore.properties
+*.jks
+*.keystore
+dist/
+.gradle/
+build/
+app/build/
+captures/
+*.iml
+.idea/

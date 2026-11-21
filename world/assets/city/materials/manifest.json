@@ -1,0 +1,121 @@
+{
+  "license": "CC0-1.0",
+  "provider": "Poly Haven",
+  "materials": {
+    "granite": {
+      "source": "https://polyhaven.com/a/granite_tile_04",
+      "author": "Amal Kumar",
+      "repeatMeters": 2,
+      "colorAdjustment": {
+        "saturation": 0.1,
+        "brightness": 1.35
+      },
+      "maps": {
+        "color": {
+          "file": "granite-color.webp",
+          "bytes": 52170,
+          "sha256": "13c3028bbb13f84db0624110873425d10e68513907025a99326e706b72156106",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/granite_tile_04/granite_tile_04_diff_1k.jpg",
+          "sourceMd5": "595d91a7ea4a3c4f9ba63186b070a2a4",
+          "sourcePixels": [
+            1024,
+            1024
+          ],
+          "pixels": [
+            512,
+            512
+          ],
+          "colorSpace": "sRGB"
+        },
+        "normal": {
+          "file": "granite-normal.webp",
+          "bytes": 1372,
+          "sha256": "7cb686f8b1c4fdd4fc639ac1bc4fbba2a231cd37d91309f4bdcb9a78ca79a601",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/granite_tile_04/granite_tile_04_nor_gl_1k.jpg",
+          "sourceMd5": "93cbb06b6a7a9fad7771589964b3c282",
+          "sourcePixels": [
+            1024,
+            1024
+          ],
+          "pixels": [
+            256,
+            256
+          ],
+          "colorSpace": "linear"
+        },
+        "arm": {
+          "file": "granite-arm.webp",
+          "bytes": 6752,
+          "sha256": "e12b7e67ad56c37fb03e08dd6ddf245bb4c2fa47adf6c677ca395e2087fd318e",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/granite_tile_04/granite_tile_04_arm_1k.jpg",
+          "sourceMd5": "c59a9a86eedb2ecc97e3356b92860bd3",
+          "sourcePixels": [
+            1024,
+            1024
+          ],
+          "pixels": [
+            256,
+            256
+          ],
+          "colorSpace": "linear"
+        }
+      }
+    },
+    "asphalt": {
+      "source": "https://polyhaven.com/a/asphalt_02",
+      "author": "Rob Tuytel",
+      "repeatMeters": 3,
+      "colorAdjustment": null,
+      "maps": {
+        "color": {
+          "file": "asphalt-color.webp",
+          "bytes": 74272,
+          "sha256": "08eda0dcb44582e6b7e2f854396f6eaff30653e1576924fcc0473801e91bd666",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_02/asphalt_02_diff_1k.jpg",
+          "sourceMd5": "fa19772d4817754c3efab708c651f5a8",
+          "sourcePixels": [
+            1024,
+            1024
+          ],
+          "pixels": [
+            512,
+            512
+          ],
+          "colorSpace": "sRGB"
+        },
+        "normal": {
+          "file": "asphalt-normal.webp",
+          "bytes": 7756,
+          "sha256": "e4ec932a23589fe01018de2006a3b82a44dcfdbf6ff8dfcd6f7e98d04618cd06",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_02/asphalt_02_nor_gl_1k.jpg",
+          "sourceMd5": "338da8de636ea36133170578cac82e8e",
+          "sourcePixels": [
+            1024,
+            1024
+          ],
+          "pixels": [
+            256,
+            256
+          ],
+          "colorSpace": "linear"
+        },
+        "arm": {
+          "file": "asphalt-arm.webp",
+          "bytes": 15314,
+          "sha256": "c7df233007ca0663bfe2e77fef2f2d3c0892e03e123b7b00e6f68ec15a487e85",
+          "sourceUrl": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/asphalt_02/asphalt_02_arm_1k.jpg",
+          "sourceMd5": "33820445f43af5e5ee484674b6939271",
+          "sourcePixels": [
+            1024,
+            1024
+          ],
+          "pixels": [
+            256,
+            256
+          ],
+          "colorSpace": "linear"
+        }
+      }
+    }
+  }
+}

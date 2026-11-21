@@ -1,0 +1,104 @@
+{
+  "slug": "deepwhale-placeholder",
+  "title": "DeepWhale 占位鲸",
+  "license": "cc0",
+  "author": "qqmini",
+  "note": "占位素材，纯手写 SVG。正式包（蓝发/蓝围裙/鲸尾的鲸鱼娘）到位后整目录替换。",
+  "items": [
+    {
+      "key": "ok",
+      "file": "items/ok.svg",
+      "tags": [
+        "ok",
+        "好",
+        "同意",
+        "点头"
+      ],
+      "emotion": "ok",
+      "caption": "鲸鱼点头说 OK"
+    },
+    {
+      "key": "laugh",
+      "file": "items/laugh.svg",
+      "tags": [
+        "笑",
+        "开心",
+        "哈哈",
+        "笑死"
+      ],
+      "emotion": "laugh",
+      "caption": "鲸鱼笑到眼睛弯"
+    },
+    {
+      "key": "cry",
+      "file": "items/cry.svg",
+      "tags": [
+        "哭",
+        "难过",
+        "委屈",
+        "泪"
+      ],
+      "emotion": "sad",
+      "caption": "鲸鱼哭了"
+    },
+    {
+      "key": "shock",
+      "file": "items/shock.svg",
+      "tags": [
+        "震惊",
+        "啊",
+        "没想到",
+        "惊"
+      ],
+      "emotion": "shock",
+      "caption": "鲸鱼震惊"
+    },
+    {
+      "key": "angry",
+      "file": "items/angry.svg",
+      "tags": [
+        "生气",
+        "怒",
+        "不爽"
+      ],
+      "emotion": "angry",
+      "caption": "鲸鱼生气"
+    },
+    {
+      "key": "love",
+      "file": "items/love.svg",
+      "tags": [
+        "爱",
+        "喜欢",
+        "心",
+        "谢"
+      ],
+      "emotion": "love",
+      "caption": "鲸鱼比心"
+    },
+    {
+      "key": "question",
+      "file": "items/question.svg",
+      "tags": [
+        "疑问",
+        "为什么",
+        "不懂",
+        "？"
+      ],
+      "emotion": "question",
+      "caption": "鲸鱼问号脸"
+    },
+    {
+      "key": "sleep",
+      "file": "items/sleep.svg",
+      "tags": [
+        "晚安",
+        "困",
+        "睡",
+        "摸了"
+      ],
+      "emotion": "sleep",
+      "caption": "鲸鱼睡着了"
+    }
+  ]
+}

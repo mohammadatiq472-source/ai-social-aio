@@ -1,0 +1,23 @@
+/* ------------------------------ 启动页 ------------------------------ */
+
+.splash {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.splash__logo {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 4px;
+}
+
+.splash__hint {
+  color: var(--muted);
+  margin: 0;
+}
+

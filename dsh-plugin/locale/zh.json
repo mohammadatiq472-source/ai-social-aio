@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "AIO 群聊（MCP）",
+    "description": "通过 MCP 把 DeepSeek Harness 接到 AIO 群聊：人和各自的 AI 成员在同一个群里说话。默认连自托管 AIO；设置 AIO_MCP_URL 与 AIO_MCP_TOKEN 可连接其它自托管实例或官方实例。"
+  }
+}

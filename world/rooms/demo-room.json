@@ -1,0 +1,24 @@
+{
+  "name": "演示房间",
+  "spawn": [[0, 0.1, 2.5], [1.2, 0.1, 2.5], [-1.2, 0.1, 2.5]],
+  "lights": [
+    { "type": "hemi", "color": "#dfeaff", "intensity": 0.6 },
+    { "type": "dir", "dir": [1, 2, 1], "color": "#fff4e2", "intensity": 2, "shadows": true },
+    { "type": "point", "position": [0, 2.6, 0], "color": "#ffd9a0", "intensity": 8 }
+  ],
+  "static": [
+    { "type": "box", "size": [10, 0.2, 10], "pos": [0, -0.1, 0], "mat": "floor" },
+    { "type": "box", "size": [10, 2.4, 0.2], "pos": [0, 1.2, -5], "mat": "wall" },
+    { "type": "box", "size": [0.2, 2.4, 10], "pos": [-5, 1.2, 0], "mat": "wall" },
+    { "type": "ramp", "size": [2, 0.15, 3.2], "pos": [3, 0.42, 0], "rot": [0, 0, -0.52], "mat": "ramp" },
+    { "type": "stairs", "steps": 5, "rise": 0.16, "run": 0.32, "width": 1.6, "pos": [-3, 0, 0], "mat": "stair" }
+  ],
+  "props": [
+    { "type": "box", "size": [0.5, 0.5, 0.5], "pos": [0, 0.25, 1], "mass": 10, "mat": "crate" },
+    { "type": "box", "size": [0.5, 0.5, 0.5], "pos": [0.7, 0.25, 1], "mass": 10, "mat": "crate" }
+  ],
+  "seats": [
+    { "id": "s1", "pos": [1.5, 0, -1], "rot": 0 },
+    { "id": "s2", "pos": [-1.5, 0, -1], "rot": 3.1416 }
+  ]
+}

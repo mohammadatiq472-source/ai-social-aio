@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 暗色跟随系统：系统切暗色时 Activity 重建并自动用 values-night，WebView 的 prefers-color-scheme 也随 app 主题变暗 -->
+    <color name="brand">#12b7f5</color>
+    <color name="status_bar">#111418</color>
+    <color name="nav_bar">#111418</color>
+    <color name="window_bg">#111418</color>
+    <color name="text_primary">#e6e8ea</color>
+    <color name="text_secondary">#9aa4ae</color>
+</resources>

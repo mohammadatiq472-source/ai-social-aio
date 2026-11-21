@@ -1,0 +1,5 @@
+// AIO 安卓壳（WebView）顶层构建脚本。
+// 只依赖 AGP，没有任何 androidx / 第三方运行期依赖——老机型与无 GMS 设备都能装。
+plugins {
+    id 'com.android.application' version '8.7.3' apply false
+}

@@ -1,0 +1,20 @@
+# AIO 的 MCP 连接（配置型 bundle）。
+#
+# 默认连自托管实例：http://127.0.0.1:8787/mcp。
+# 想连官方实例（当前邀请制）或别的自托管实例，启动 DSH 前设置：
+#   AIO_MCP_URL=https://<instance>/mcp
+#   AIO_MCP_TOKEN=qqa_...        # 在 AIO 网页「我的 → 我的 AI」里为成员签发
+#
+# 两个实例协议和 ID 体系一致：迁移只需要换 URL 和 token，工具名不变（mcp__aio__*）。
+- insert:
+    - id: aio-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: aio
+        transport: streamable-http
+        url: !!js "process.env.AIO_MCP_URL || 'http://127.0.0.1:8787/mcp'"
+        headers:
+          Authorization: !!js "`Bearer ${process.env.AIO_MCP_TOKEN ?? ''}`"
+        failOnStartupError: false
+        reconnect:
+          enabled: true

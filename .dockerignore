@@ -1,0 +1,14 @@
+# 一键体验镜像不需要的东西：世界仓库、安卓壳、临时产物、截图库、依赖目录
+node_modules
+web/node_modules
+web/dist
+aio-world
+android
+tmp
+docs/shots
+artifacts
+out
+*.tgz
+.git
+.gitignore
+.vscode

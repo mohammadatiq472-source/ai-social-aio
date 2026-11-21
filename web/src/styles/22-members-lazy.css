@@ -1,0 +1,38 @@
+/* ==========================================================================
+   大群成员懒加载（成员面板：加载中 / 分批渲染 / 未加载提示）
+   ========================================================================== */
+
+.members__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 140px;
+}
+
+.members__spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  border-top-color: var(--primary);
+  animation: spin 0.9s linear infinite;
+}
+
+.members__tip {
+  margin: 4px 8px 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--hover);
+  color: var(--text-2);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.members__more {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 4px;
+}
+
